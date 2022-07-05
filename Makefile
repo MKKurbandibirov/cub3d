@@ -2,13 +2,13 @@ NAME		=	cub3d
 
 CC			=	gcc
 
-FLAGS		=	-Wall -Wextra -g
+FLAGS		=	-Wall -Wextra -Werror -g
+
 INCL		= 	./header_files/
 
 CFLAGS		=	$(FLAGS) -I $(INCL)
 
 PATH_SRC	=	source_files/
-
 
 PATH_LFT	=	libft/
 
@@ -49,6 +49,7 @@ $(PATH_OBJ)%.o	:	$(PATH_SRC)%.c $(HEAD_FILE)
 
 $(NAME)			:	 $(OBJ) $(HEAD_FILE) $(SRC_FT) $(SRC_SH)
 	@make -C libft/
+	@make -C mlx/
 	@$(CC) $(CFLAGS) $(PATH_OBJ)*.o -o $(NAME)
 
 clean			:
@@ -56,6 +57,7 @@ clean			:
 
 fclean			:	clean
 	@make fclean -C libft/
+	@make clean -C mlx/
 	@rm -rf $(NAME)
 
 re				:	fclean all
