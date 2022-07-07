@@ -2,7 +2,9 @@ NAME		=	cub3d
 
 CC			=	gcc
 
-FLAGS		=	-Wall -Wextra -Werror -g
+# FLAGS		=	-Wall -Wextra -Werror -g
+
+FLAGS		=	-Wall -Wextra -g
 
 INCL		= 	./header_files/
 
@@ -14,7 +16,7 @@ PATH_LFT	=	libft/
 
 PATH_OBJ	=	./object_files/
 
-FILE_SRC	=	main.c  
+FILE_SRC	=	main.c initialization.c utils.c cub_destroy.c
 				
 LIBFT_SRC	=	ft_atoi.c		ft_bzero.c		ft_calloc.c	ft_isalnum.c	ft_isalpha.c	ft_isascii.c	ft_isdigit.c	ft_isprint.c\
 				ft_itoa.c		ft_memchr.c	ft_memcmp.c 	ft_memcpy.c 	ft_memmove.c 	ft_memset.c	ft_putchar_fd.c	ft_strjoin_free.c\
@@ -44,13 +46,13 @@ $(PATH_OBJ)%.o	:	$(PATH_SRC)%.c $(HEAD_FILE)
 	@if ! [ -d ./object_files ] ; then \
 		mkdir object_files ; \
 	fi 
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -Imlx -c $< -o $@
 	@echo FILE COLLECTED $@
 
 $(NAME)			:	 $(OBJ) $(HEAD_FILE) $(SRC_FT) $(SRC_SH)
 	@make -C libft/
 	@make -C mlx/
-	@$(CC) $(CFLAGS) $(PATH_OBJ)*.o -o $(NAME)
+	@$(CC) $(CFLAGS) $(PATH_OBJ)*.o -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 clean			:
 	@rm -rf $(PATH_OBJ)
