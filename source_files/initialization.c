@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:26:17 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/08 15:30:14 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:06:51 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static void	fill_map(t_cub *cub)
 	int	j;
 
 	i = 0;
-	while (i < cub->map_length)
+	while (i < cub->map_height)
 	{
 		j = 0;
 		while (j < cub->map_width)
 		{
-			if (i == 0 || i == cub->map_length - 1
+			if (i == 0 || i == cub->map_height - 1
 				|| j == 0 || j == cub->map_width - 1)
 				cub->map[i][j] = WALL;
 			else
@@ -70,9 +70,6 @@ t_rays	*rays_init(t_cub *cub)
 	rays->dir_y = 0;
 	rays->plane_x = 0;
 	rays->plane_y = 0.66;
-	rays->camera_x = 0;
-	rays->ray_dir_x = 0;
-	rays->ray_dir_y = 0;
 }
 
 t_cub	*cub_init(char *map_path)
@@ -89,9 +86,9 @@ t_cub	*cub_init(char *map_path)
 			WIN_LENGTH, WIN_WIDTH, "CUB_3D");
 	if (cub->mlx_win == NULL)
 		return (NULL);
-	cub->map_length = 100; /*Change after parsing*/
+	cub->map_height = 100; /*Change after parsing*/
 	cub->map_width = 100; /*Change after parsing*/
-	cub->map = get_map(cub->map_length, cub->map_width);
+	cub->map = get_map(cub->map_height, cub->map_width);
 	if (cub->map == NULL)
 		return (NULL);
 	cub->map_path = map_path;

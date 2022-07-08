@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:39:53 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/08 15:50:40 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:08:21 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,25 @@ typedef struct s_rays
 	double	ray_dir_y;
 	int		map_x;
 	int		map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
 }	t_rays;
 
 typedef struct s_cub
 {
 	void	*mlx_ptr;
 	void	*mlx_win;
-	int		map_length;
+	int		map_height;
 	int		map_width;
 	int		**map;
 	char	*map_path;
