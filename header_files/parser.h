@@ -6,14 +6,15 @@
 /*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:36:00 by gtaggana          #+#    #+#             */
-/*   Updated: 2022/07/08 15:42:47 by gtaggana         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:19:03 by gtaggana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "cub3d.h"
+# include <fcntl.h>
+# include "cub3d.h"
 
 typedef struct s_texture
 {
@@ -43,12 +44,16 @@ typedef struct s_prs
 	t_cub		*cub;
 }	t_prs;
 
+//prepars_list_func.c
+
 //parser.c
-void	ft_preparser(char *path);
+void	ft_parser(char *path, t_cub *cub);
+
+//preparser.c
+void	ft_preparser(t_prs *prs);
 
 //utils.c
 void	ft_strerr(char *s);
-int	ft_access(char *path);
-
+int		ft_access(char *path);
 
 #endif
