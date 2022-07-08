@@ -6,14 +6,15 @@
 /*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:35:34 by gtaggana          #+#    #+#             */
-/*   Updated: 2022/07/08 16:14:58 by gtaggana         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:59:40 by gtaggana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header_files/parser.h"
 
-static void ft_init_prs(t_prs *prs, t_cub cub)
+static void	ft_init_prs(t_prs *prs, t_cub *cub)
 {
+	prs->len_lists = 0;
 	prs->cub = cub;
 	prs->texture = NULL;
 	prs->preprs = NULL;
@@ -44,6 +45,6 @@ void	ft_parser(char *path, t_cub *cub)
 	if (ft_access(path))
 		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
 	ft_init_prs(&prs, cub);
-	ft_preparser(&prs);
+	ft_preparser(&prs, path);
 }
 

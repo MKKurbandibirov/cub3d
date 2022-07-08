@@ -30,7 +30,6 @@ typedef struct s_texture
 typedef struct s_plist
 {
 	int				id;
-	int				cnt;
 	char			*data;
 	struct s_plist	*next;
 	struct s_plist	*prev;
@@ -41,6 +40,7 @@ typedef struct s_prs
 	int			**map;
 	t_texture	*texture;
 	t_plist		*preprs;
+	int			len_lists;
 	t_cub		*cub;
 }	t_prs;
 
