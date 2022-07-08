@@ -1,5 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/08 14:36:00 by gtaggana          #+#    #+#             */
+/*   Updated: 2022/07/08 15:26:33 by gtaggana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
+
+#include "cub3d.h"
 
 typedef struct s_texture
 {
@@ -9,17 +23,28 @@ typedef struct s_texture
 	char	*ea;
 	char	*f;
 	char	*c;
+	int		check_cnt;
 }	t_texture;
 
-typedef struct s_prepars
+typedef struct s_plist
 {
-	 
-}	t_prepars;
+	char			*data;
+	struct s_plist	*next;
+	struct s_plist	*prev;
+}	t_plist;
 
 typedef struct s_prs
 {
 	int			**map;
 	t_texture	*texture;
 }	t_prs;
+
+//parser.c
+void	ft_preparser(char *path);
+
+//utils.c
+void	ft_strerr(char *s);
+int	ft_access(char *path);
+
 
 #endif
