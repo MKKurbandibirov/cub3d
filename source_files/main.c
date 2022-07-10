@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:19:22 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/07 18:26:18 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/10 15:00:45 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		cub = cub_init(argv[1]);
-		print_map(cub);
 		if (cub == NULL)
 			print_err("[ERROR]: MLX initialization error");
-		mlx_hook(cub->mlx_win, 2, 0, hooking, cub);
-		mlx_hook(cub->mlx_win, 17, 0, on_destroy, cub);
-		mlx_loop(cub->mlx_ptr);
+		print_map(cub);
+		mlx_hook(cub->mlx->win_ptr, 2, 0, hooking, cub);
+		mlx_hook(cub->mlx->win_ptr, 17, 0, on_destroy, cub);
+		// raycasting(cub);
+		// mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->img_ptr, 0, 0);
+		// mlx_loop_hook(cub->mlx_ptr, raycasting, cub)
+		mlx_loop(cub->mlx->mlx_ptr);
 		cub_destroy(cub);
 	}
 	return (0);

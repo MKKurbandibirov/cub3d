@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:42:36 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/08 17:07:03 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:38:49 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,22 @@ void	map_free(int **map, int height)
 	free(map);
 }
 
+void	free_textures(t_cub *cub)
+{
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->no_tex->img_ptr);
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->so_tex->img_ptr);
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->ea_tex->img_ptr);
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->we_tex->img_ptr);
+}
+
 void	cub_destroy(t_cub *cub)
 {
-	mlx_destroy_window(cub->mlx_ptr, cub->mlx_win);
+	free(cub->person);
+	free(cub->rays);
+	free_textures(cub);
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->mlx->img_ptr);
+	mlx_destroy_window(cub->mlx->mlx_ptr, cub->mlx->win_ptr);
+	free(cub->mlx);
 	map_free(cub->map, cub->map_height);
 	free(cub);
 }
