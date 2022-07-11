@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:39:53 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/10 15:10:06 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:31:40 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 
-# define WIN_HEIGHT 1920
-# define WIN_WIDTH	1080
-
+# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1920
 # define TEX_HEIGHT 64
 # define TEX_WIDTH 64
 
@@ -32,13 +31,20 @@
 # define WEST 4
 # define EAST 5
 
+# define MOVESPEED 0.1
+# define ROTATESPEED 0.1
+# define FORWARD 13
+# define BACKWARD 1
+# define ROTATE_L 0
+# define ROTATE_R 2
+
 # define FLOOR 0
 # define WALL 1
 # define EMPTY -1
 
 # define EXIT_KEY 53
 
-typedef	struct s_person
+typedef struct s_person
 {
 	double	pos_x;
 	double	pos_y;

@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:30:29 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/10 15:11:51 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:44:50 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_mlx	*t_mlx_init(void)
 	if (mlx->mlx_ptr == NULL)
 		return (NULL);
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr,
-			WIN_HEIGHT, WIN_WIDTH, "CUB_3D");
+			WIN_WIDTH, WIN_HEIGHT, "CUB_3D");
 	if (mlx->win_ptr == NULL)
 		return (NULL);
 	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
@@ -64,8 +64,9 @@ t_person	*person_init(void)
 	if (person == NULL)
 		return (NULL);
 	/*Change after parsing*/
-	person->pos_x = 50;
-	person->pos_y = 50;
+	person->pos_x = 10;
+	person->pos_y = 2;
+	printf("jjkjkjjkjkkj");
 	person->dir_x = -1;
 	person->dir_y = 0;
 	person->plane_x = 0;

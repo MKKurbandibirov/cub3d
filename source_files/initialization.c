@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:26:17 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/10 14:38:15 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:19:47 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ t_cub	*cub_init(char *map_path)
 	cub = (t_cub *)malloc(sizeof(t_cub));
 	if (cub == NULL)
 		return (NULL);
-	cub->map_height = 100; /*Change after parsing*/
-	cub->map_width = 100; /*Change after parsing*/
+	cub->map_height = 50; /*Change after parsing*/
+	cub->map_width = 50; /*Change after parsing*/
 	cub->map = get_map(cub->map_height, cub->map_width);
 	if (cub->map == NULL)
 		return (NULL);
