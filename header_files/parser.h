@@ -6,7 +6,7 @@
 /*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:36:00 by gtaggana          #+#    #+#             */
-/*   Updated: 2022/07/08 16:19:03 by gtaggana         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:45:07 by gtaggana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@
 
 typedef struct s_texture
 {
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
+	char	*massiv[6];
 	char	*f;
 	char	*c;
 	int		check_cnt;
@@ -45,12 +42,16 @@ typedef struct s_prs
 }	t_prs;
 
 //prepars_list_func.c
+void	ft_pushback_p(t_plist **head, char *line, t_prs *prs);
+void	ft_delelem(t_plist **head, t_plist *delElem, t_prs *prs);
+t_plist	*ft_getlast(t_plist *head);
 
 //parser.c
 void	ft_parser(char *path, t_cub *cub);
 
 //preparser.c
 void	ft_preparser(t_prs *prs);
+int		ft_is_map(char *line);
 
 //utils.c
 void	ft_strerr(char *s);

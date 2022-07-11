@@ -47,4 +47,3 @@ void	ft_parser(char *path, t_cub *cub)
 	ft_init_prs(&prs, cub);
 	ft_preparser(&prs, path);
 }
-
