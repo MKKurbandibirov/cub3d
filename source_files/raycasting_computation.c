@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:44:33 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:48:44 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 10:42:16 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ void	direction_computation(t_cub *cub, int x)
 		+ cub->person->plane_y * cub->person->camera_x;
 	cub->rays->map_x = (int)cub->person->pos_x;
 	cub->rays->map_y = (int)cub->person->pos_y;
-	if (cub->rays->ray_dir_x == 0)
-		cub->rays->delta_dist_x = 1e30;
-	else
-		cub->rays->delta_dist_x = fabs(1 / cub->rays->ray_dir_x);
-	if (cub->rays->ray_dir_y == 0)
-		cub->rays->delta_dist_y = 1e30;
-	else
-		cub->rays->delta_dist_y = fabs(1 / cub->rays->ray_dir_y);
+	cub->rays->delta_dist_x = sqrt(1 + (cub->rays->ray_dir_y
+				* cub->rays->ray_dir_y)
+			/ (cub->rays->ray_dir_x * cub->rays->ray_dir_x));
+	cub->rays->delta_dist_y = fabs(1 + (cub->rays->ray_dir_x
+				* cub->rays->ray_dir_x)
+			/ (cub->rays->ray_dir_y * cub->rays->ray_dir_y));
 	cub->rays->hit = 0;
 }
 
@@ -84,7 +82,7 @@ void	dda_computation(t_cub *cub)
 			- cub->rays->delta_dist_x;
 	else
 		cub->rays->perp_wall_dist = cub->rays->side_dist_y
-			- cub->rays->side_dist_y;
+			- cub->rays->delta_dist_y;
 }
 
 void	tex_computation(t_cub *cub)

@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:30:29 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:44:50 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:03:10 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_texture	*texture_init(int type, char *path, t_mlx *mlx)
 	if (tex->img_ptr == NULL)
 		return (NULL);
 	tex->addr = mlx_get_data_addr(tex->img_ptr,
-			&tex->bits_per_pixel, &tex->line_lenght, &tex->endian);
+			&tex->bits_per_pixel, &tex->line_length, &tex->endian);
 	if (tex->addr == NULL)
 		return (NULL);
 	return (tex);
@@ -50,7 +50,7 @@ t_mlx	*t_mlx_init(void)
 	if (mlx->img_ptr == NULL)
 		return (NULL);
 	mlx->addr = mlx_get_data_addr(mlx->img_ptr,
-			&mlx->bits_per_pixel, &mlx->line_lenght, &mlx->endian);
+			&mlx->bits_per_pixel, &mlx->line_length, &mlx->endian);
 	if (mlx->addr == NULL)
 		return (NULL);
 	return (mlx);
@@ -64,13 +64,14 @@ t_person	*person_init(void)
 	if (person == NULL)
 		return (NULL);
 	/*Change after parsing*/
-	person->pos_x = 10;
-	person->pos_y = 2;
+	person->pos_x = 25;
+	person->pos_y = 25;
 	printf("jjkjkjjkjkkj");
 	person->dir_x = -1;
 	person->dir_y = 0;
 	person->plane_x = 0;
 	person->plane_y = 0.66;
+	person->mouse_x = 0;
 	return (person);
 }
 

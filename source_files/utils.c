@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:29:05 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/10 15:08:49 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 10:37:55 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	my_put_pixel(t_cub *cub, int x, int y, int color)
 
 	if (x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
 	{
-		dst = cub->mlx->addr + (y * cub->mlx->line_lenght
+		dst = cub->mlx->addr + (y * cub->mlx->line_length
 				+ x * (cub->mlx->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
 	}

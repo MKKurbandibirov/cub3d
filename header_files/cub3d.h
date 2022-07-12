@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:39:53 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:31:40 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:01:21 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_person
 	double	plane_x;
 	double	plane_y;
 	double	camera_x;
+	int		mouse_x;
 }	t_person;
 
 typedef struct s_rays
@@ -83,7 +84,7 @@ typedef struct s_texture
 	void	*img_ptr;
 	char	*addr;
 	int		bits_per_pixel;
-	int		line_lenght;
+	int		line_length;
 	int		endian;
 	int		type;
 	char	*path;
@@ -98,7 +99,7 @@ typedef	struct s_mlx
 	void		*img_ptr;
 	char		*addr;
 	int			bits_per_pixel;
-	int			line_lenght;
+	int			line_length;
 	int			endian;
 }	t_mlx;
 
@@ -139,5 +140,10 @@ void		tex_computation(t_cub *cub);
 void		dda_computation(t_cub *cub);
 void		distance_computation(t_cub *cub);
 void		direction_computation(t_cub *cub, int x);
+
+/*--------------- Moving/Rotating -----------------*/
+void		moving(t_cub *cub, int keycode);
+void		rotating(t_cub *cub, int keycode);
+int			mouse_rotate(int x, int y, t_cub *cub);
 
 #endif

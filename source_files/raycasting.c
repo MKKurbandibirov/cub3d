@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 15:09:40 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:56:42 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 10:41:03 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	draw_floor_ceil(t_cub *cub, int x, int ceil, int floor)
 		my_put_pixel(cub, x, y, ceil);
 		y++;
 	}
-	y =  cub->rays->draw_end;
+	y = cub->rays->draw_end;
 	while (y < WIN_HEIGHT)
 	{
 		my_put_pixel(cub, x, y, floor);
@@ -32,30 +32,29 @@ void	draw_floor_ceil(t_cub *cub, int x, int ceil, int floor)
 
 void	draw(t_cub *cub, t_texture *tex, int x)
 {
-	int		r;
-	int		g;
-	int		b;
 	double	step;
 	double	tex_pos;
+	int		y;
 
+	y = cub->rays->draw_start;
 	step = 1.0 * TEX_HEIGHT / cub->rays->line_height;
 	tex_pos = (cub->rays->draw_start - WIN_HEIGHT / 2
 			+ cub->rays->line_height / 2) * step;
-	int	y = cub->rays->draw_start;
 	while (y < cub->rays->draw_end)
 	{
 		cub->rays->tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
 		tex_pos += step;
-		r = (unsigned int)tex->addr[cub->rays->tex_y * tex->line_lenght
-			+ cub->rays->tex_x * tex->bits_per_pixel / 8];
-		g = (unsigned int)tex->addr[cub->rays->tex_y * tex->line_lenght
-			+ cub->rays->tex_x * tex->bits_per_pixel / 8 + 1];
-		b = (unsigned int)tex->addr[cub->rays->tex_y * tex->line_lenght
-			+ cub->rays->tex_x * tex->bits_per_pixel / 8 + 2];
-		my_put_pixel(cub, x, y, (r << 16 | g << 8 | b));
+		my_put_pixel(cub, x, y,
+			(((unsigned int)tex->addr[cub->rays->tex_y * tex->line_length
+					+ cub->rays->tex_x * tex->bits_per_pixel / 8]) << 16
+				| ((unsigned int)tex->addr[cub->rays->tex_y * tex->line_length
+					+ cub->rays->tex_x * tex->bits_per_pixel / 8 + 1]) << 8
+				| (unsigned int)tex->addr[cub->rays->tex_y * tex->line_length
+				+ cub->rays->tex_x * tex->bits_per_pixel / 8 + 2]));
 		y++;
 	}
-	draw_floor_ceil(cub, x, 0x0095A7C0, 0x005D814E); /* Change after parsing */
+	/* Change after parsing */
+	draw_floor_ceil(cub, x, 0x0095A7C0, 0x005D814E);
 }
 
 void	raycasting(t_cub *cub)
