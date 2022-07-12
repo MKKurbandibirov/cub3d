@@ -14,9 +14,14 @@
 
 static void	ft_init_prs(t_prs *prs, t_cub *cub)
 {
+	int	i;
+
+	i = 0;
 	prs->len_lists = 0;
+	prs->texture = (t_texture *) malloc(sizeof(t_texture) * 1);
+	while (i < 6)
+		prs->texture->massiv[i++] = NULL;
 	prs->cub = cub;
-	prs->texture = NULL;
 	prs->preprs = NULL;
 	prs->map = NULL;
 }
@@ -41,7 +46,7 @@ void	ft_parser(char *path, t_cub *cub)
 {
 	t_prs	prs;
 
-	ft_validated_path(path);
+	ft_validatede_path(path);
 	if (ft_access(path))
 		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
 	ft_init_prs(&prs, cub);

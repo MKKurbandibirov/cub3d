@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
-
 /* Chanege after parsing */
 static void	fill_map(t_cub *cub)
 {
@@ -91,6 +90,7 @@ t_cub	*cub_init(char *map_path)
 		return (NULL);
 	cub->map_length = 100; /*Change after parsing*/
 	cub->map_width = 100; /*Change after parsing*/
+	ft_parser(map_path, cub);
 	cub->map = get_map(cub->map_length, cub->map_width);
 	if (cub->map == NULL)
 		return (NULL);

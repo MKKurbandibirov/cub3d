@@ -31,3 +31,40 @@ int	ft_access(char *path)
 	close(fd);
 	return (0);
 }
+
+int	ft_search_parties(char *s)
+{
+	if (!s || !(*s))
+		return (0);
+	if (ft_strnstr(s, "NO", ft_strlen(s)) || ft_strnstr(s, "SO", ft_strlen(s))
+		|| ft_strnstr(s, "EA", ft_strlen(s)) || ft_strchr(s, 'C')
+		|| ft_strnstr(s, "WE", ft_strlen(s)) || ft_strchr(s, 'F'))
+		return (1);
+	return (0);
+}
+
+int	ft_is_map(char *line)
+{
+	int	i;
+
+	if (!line || !(*line) || *line == '\n')
+		return (0);
+	i = 0;
+	while (line[i] && (line[i] == '1' || line[i] == '0' || line[i] == ' '
+			|| line[i] == 'N' || line[i] == 'E' || line[i] == 'S'
+			|| line[i] == 'W'))
+		i++;
+	if (!line[i] || line[i] == '\n')
+		return (1);
+	return (0);
+}
+
+int	ft_skip_space(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && ft_isspace(s[i]))
+		i++;
+	return (i);
+}

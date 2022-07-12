@@ -61,6 +61,7 @@ typedef struct s_cub
 	t_rays	*rays;
 }	t_cub;
 
+# include "parser.h"
 /* Initialization */
 t_cub	*cub_init(char *map_path);
 

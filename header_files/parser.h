@@ -6,7 +6,7 @@
 /*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:36:00 by gtaggana          #+#    #+#             */
-/*   Updated: 2022/07/11 14:45:07 by gtaggana         ###   ########.fr       */
+/*   Updated: 2022/07/12 10:42:35 by gtaggana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 typedef struct s_texture
 {
 	char	*massiv[6];
-	char	*f;
-	char	*c;
 	int		check_cnt;
 }	t_texture;
 
@@ -50,11 +48,16 @@ t_plist	*ft_getlast(t_plist *head);
 void	ft_parser(char *path, t_cub *cub);
 
 //preparser.c
-void	ft_preparser(t_prs *prs);
-int		ft_is_map(char *line);
+void	ft_preparser(t_prs *prs, char *path);
 
 //utils.c
 void	ft_strerr(char *s);
+int		ft_search_parties(char *s);
+int		ft_skip_space(char *s);
 int		ft_access(char *path);
+int		ft_is_map(char *line);
+
+// prepars_continue.c
+int		ft_status(char *s);
 
 #endif
