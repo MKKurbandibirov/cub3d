@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:19:22 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 11:06:30 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:50:02 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	rendering(t_cub *cub)
 	ft_bzero(cub->mlx->addr, WIN_HEIGHT + WIN_WIDTH
 		* (cub->mlx->bits_per_pixel / 8));
 	raycasting(cub);
+	draw_sprite(cub);
 	mlx_put_image_to_window(cub->mlx->mlx_ptr,
 		cub->mlx->win_ptr, cub->mlx->img_ptr, 0, 0);
 	return (0);

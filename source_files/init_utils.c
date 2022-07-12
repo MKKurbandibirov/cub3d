@@ -6,20 +6,19 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:30:29 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 11:03:10 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 12:53:08 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
 
-t_texture	*texture_init(int type, char *path, t_mlx *mlx)
+t_texture	*texture_init(char *path, t_mlx *mlx)
 {
 	t_texture	*tex;
 
 	tex = (t_texture *)malloc(sizeof(t_texture));
 	if (tex == NULL)
 		return (NULL);
-	tex->type = type;
 	tex->path = path;
 	tex->img_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr,
 			tex->path, &tex->tex_width, &tex->tex_height);
@@ -66,7 +65,6 @@ t_person	*person_init(void)
 	/*Change after parsing*/
 	person->pos_x = 25;
 	person->pos_y = 25;
-	printf("jjkjkjjkjkkj");
 	person->dir_x = -1;
 	person->dir_y = 0;
 	person->plane_x = 0;
@@ -75,19 +73,40 @@ t_person	*person_init(void)
 	return (person);
 }
 
+t_sprite	*sprite_init(char *path, t_cub *cub)
+{
+	t_sprite	*sprite;
+
+	sprite = (t_sprite *)malloc(sizeof(t_sprite));
+	if (sprite == NULL)
+		return (NULL);
+	sprite->path = path;
+	sprite->pos_x = 15; /*Change after parsing*/
+	sprite->pos_y = 15; /*Change after parsing*/
+	sprite->img_ptr = mlx_xpm_file_to_image(cub->mlx->mlx_ptr,
+			path, &sprite->width, &sprite->height);
+	if (sprite->img_ptr == NULL)
+		return (NULL);
+	sprite->addr = mlx_get_data_addr(sprite->img_ptr, &sprite->bits_per_pixel,
+			&sprite->line_length, &sprite->endian);
+	if (sprite->addr == NULL)
+		return (NULL);
+	return (sprite);
+}
+
 void	*set_textures(t_cub *cub)
 {
 	/* Change after parsing */
-	cub->no_tex = texture_init(NORTH, "textures/no_wall.xpm", cub->mlx);
+	cub->no_tex = texture_init("textures/no_wall.xpm", cub->mlx);
 	if (cub->no_tex == NULL)
 		return (NULL);
-	cub->so_tex = texture_init(SOUTH, "textures/so_wall.xpm", cub->mlx);
+	cub->so_tex = texture_init("textures/so_wall.xpm", cub->mlx);
 	if (cub->so_tex == NULL)
 		return (NULL);
-	cub->we_tex = texture_init(WEST, "textures/we_wall.xpm", cub->mlx);
+	cub->we_tex = texture_init("textures/we_wall.xpm", cub->mlx);
 	if (cub->we_tex == NULL)
 		return (NULL);
-	cub->ea_tex = texture_init(EAST, "textures/ea_wall.xpm", cub->mlx);
+	cub->ea_tex = texture_init("textures/ea_wall.xpm", cub->mlx);
 	if (cub->ea_tex == NULL)
 		return (NULL);
 	return (cub);

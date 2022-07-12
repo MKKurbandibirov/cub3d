@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 15:09:40 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 10:41:03 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:29:23 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	raycasting(t_cub *cub)
 			draw(cub, cub->ea_tex, x);
 		else if (cub->rays->side == 1 && cub->rays->ray_dir_y < 0)
 			draw(cub, cub->we_tex, x);
+		cub->sprite->z_buff[x] = cub->rays->perp_wall_dist;
 		x++;
 	}
 }

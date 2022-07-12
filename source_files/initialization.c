@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:26:17 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:19:47 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:14:28 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	fill_map(t_cub *cub)
 		{
 			if (i == 0 || i == cub->map_height - 1
 				|| j == 0 || j == cub->map_width - 1)
+				cub->map[i][j] = WALL;
+			else if (i == 10 && j == 10)
 				cub->map[i][j] = WALL;
 			else
 				cub->map[i][j] = FLOOR;
@@ -78,9 +80,8 @@ t_cub	*cub_init(char *map_path)
 	if (cub->rays == NULL)
 		return (NULL);
 	cub->person = person_init();
-	if (cub->person == NULL)
-		return (NULL);
-	if (set_textures(cub) == NULL)
+	cub->sprite = sprite_init("textures/grogu.xpm", cub);
+	if (set_textures(cub) == NULL || cub->person == NULL || cub->sprite == NULL)
 		return (NULL);
 	return (cub);
 }

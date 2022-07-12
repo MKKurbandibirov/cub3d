@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:39:53 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 11:01:21 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:18:25 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@
 # define ROTATESPEED 0.1
 # define FORWARD 13
 # define BACKWARD 1
-# define ROTATE_L 0
-# define ROTATE_R 2
+# define LEFT 0
+# define RIGHT 2
+# define ROTATE_L 123
+# define ROTATE_R 124
 
 # define FLOOR 0
 # define WALL 1
@@ -92,7 +94,36 @@ typedef struct s_texture
 	int		tex_width;
 }	t_texture;
 
-typedef	struct s_mlx
+typedef struct s_sprite
+{
+	void	*img_ptr;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	char	*path;
+	int		height;
+	int		width;
+	int		pos_x;
+	int		pos_y;
+	double	sprite_x;
+	double	sprite_y;
+	double	transform_x;
+	double	transform_y;
+	int		draw_start_x;
+	int		draw_end_x;
+	int		draw_start_y;
+	int		draw_end_y;
+	int		sprite_height;
+	int		sprite_width;
+	int		sprite_screen_x;
+	int		tex_x;
+	int		tex_y;
+	double	z_buff[WIN_WIDTH];
+}	t_sprite;
+
+
+typedef struct s_mlx
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
@@ -116,6 +147,7 @@ typedef struct s_cub
 	t_texture	*so_tex;
 	t_texture	*we_tex;
 	t_texture	*ea_tex;
+	t_sprite	*sprite;
 }	t_cub;
 
 /*---------------- Initialization ----------------*/
@@ -123,7 +155,8 @@ t_cub		*cub_init(char *map_path);
 void		*set_textures(t_cub *cub);
 t_person	*person_init(void);
 t_mlx		*t_mlx_init(void);
-t_texture	*texture_init(int type, char *path, t_mlx *mlx);
+t_texture	*texture_init(char *path, t_mlx *mlx);
+t_sprite	*sprite_init(char *path, t_cub *cub);
 
 /*------------------ Destroing -------------------*/
 void		map_free(int **map, int length);
@@ -145,5 +178,8 @@ void		direction_computation(t_cub *cub, int x);
 void		moving(t_cub *cub, int keycode);
 void		rotating(t_cub *cub, int keycode);
 int			mouse_rotate(int x, int y, t_cub *cub);
+
+
+void		draw_sprite(t_cub *cub);
 
 #endif

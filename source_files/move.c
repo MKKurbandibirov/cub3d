@@ -6,11 +6,19 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:19:58 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 11:05:16 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:00:08 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
+
+// void	move_right(t_cub *cub)
+// {
+// 	double	old_dir_x;
+// 	double	old_plane_x;
+
+	
+// }
 
 void	moving(t_cub *cub, int keycode)
 {
@@ -31,6 +39,24 @@ void	moving(t_cub *cub, int keycode)
 		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
 			- cub->person->dir_y * MOVESPEED)] == 0)
 			cub->person->pos_y -= cub->person->dir_y * MOVESPEED;
+	}
+	if (keycode == RIGHT)
+	{
+		if (cub->map[(int)(cub->person->pos_x + sin(cub->person->dir_x)
+				* MOVESPEED)][(int)cub->person->pos_y] == 0)
+			cub->person->pos_x += sin(cub->person->dir_x) * MOVESPEED;
+		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
+			+ sin(cub->person->dir_y) * MOVESPEED)] == 0)
+			cub->person->pos_y += cos(cub->person->dir_y) * MOVESPEED;
+	}
+	if (keycode == LEFT)
+	{
+		if (cub->map[(int)(cub->person->pos_x - cos(cub->person->dir_x)
+				* MOVESPEED)][(int)cub->person->pos_y] == 0)
+			cub->person->pos_x -= cos(cub->person->dir_x) * MOVESPEED;
+		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
+			- sin(cub->person->dir_y) * MOVESPEED)] == 0)
+			cub->person->pos_y -= sin(cub->person->dir_y) * MOVESPEED;
 	}
 }
 
@@ -79,7 +105,7 @@ void	rotating(t_cub *cub, int keycode)
 int	mouse_rotate(int x, int y, t_cub *cub)
 {
 	(void)y;
-	if (x > 0 && x < WIN_WIDTH)
+	if (x > 0 && x < WIN_WIDTH && abs(x - cub->person->mouse_x) > 5)
 	{
 		if (x - cub->person->mouse_x > 0)
 			rotate_right(cub);
