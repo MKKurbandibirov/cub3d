@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 15:09:40 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 14:29:23 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:31:45 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,25 @@ void	draw(t_cub *cub, t_texture *tex, int x)
 	double	tex_pos;
 	int		y;
 
+	cub->rays->tex_x = (int)(cub->rays->wall_x * (double)tex->tex_width);
+	if (cub->rays->side == 0 && cub->rays->ray_dir_x < 0)
+		cub->rays->tex_x = tex->tex_width - cub->rays->tex_x - 1;
+	if (cub->rays->side == 1 && cub->rays->ray_dir_y > 0)
+		cub->rays->tex_x = tex->tex_width - cub->rays->tex_x - 1;
 	y = cub->rays->draw_start;
-	step = 1.0 * TEX_HEIGHT / cub->rays->line_height;
+	step = 1.0 * tex->tex_height / cub->rays->line_height;
 	tex_pos = (cub->rays->draw_start - WIN_HEIGHT / 2
 			+ cub->rays->line_height / 2) * step;
 	while (y < cub->rays->draw_end)
 	{
-		cub->rays->tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
+		cub->rays->tex_y = (int)tex_pos & (tex->tex_height - 1);
 		tex_pos += step;
 		my_put_pixel(cub, x, y,
-			(((unsigned int)tex->addr[cub->rays->tex_y * tex->line_length
+			(((unsigned char)tex->addr[cub->rays->tex_y * tex->line_length
 					+ cub->rays->tex_x * tex->bits_per_pixel / 8]) << 16
-				| ((unsigned int)tex->addr[cub->rays->tex_y * tex->line_length
+				| ((unsigned char)tex->addr[cub->rays->tex_y * tex->line_length
 					+ cub->rays->tex_x * tex->bits_per_pixel / 8 + 1]) << 8
-				| (unsigned int)tex->addr[cub->rays->tex_y * tex->line_length
+				| (unsigned char)tex->addr[cub->rays->tex_y * tex->line_length
 				+ cub->rays->tex_x * tex->bits_per_pixel / 8 + 2]));
 		y++;
 	}

@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:39:53 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 15:18:25 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:54:22 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 
-# define WIN_HEIGHT 1080
-# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1200
+# define WIN_WIDTH 1800
 # define TEX_HEIGHT 64
 # define TEX_WIDTH 64
 
@@ -179,7 +179,7 @@ void		moving(t_cub *cub, int keycode);
 void		rotating(t_cub *cub, int keycode);
 int			mouse_rotate(int x, int y, t_cub *cub);
 
-
 void		draw_sprite(t_cub *cub);
+void		my_put_spixel(t_sprite *spr, int x, int y, int color);
 
 #endif

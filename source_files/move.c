@@ -6,19 +6,11 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:19:58 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 16:00:08 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:36:57 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
-
-// void	move_right(t_cub *cub)
-// {
-// 	double	old_dir_x;
-// 	double	old_plane_x;
-
-	
-// }
 
 void	moving(t_cub *cub, int keycode)
 {

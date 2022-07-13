@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:26:17 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 15:14:28 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:42:27 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_cub	*cub_init(char *map_path)
 	if (cub->rays == NULL)
 		return (NULL);
 	cub->person = person_init();
-	cub->sprite = sprite_init("textures/grogu.xpm", cub);
+	cub->sprite = sprite_init("textures/1.xpm", cub);
 	if (set_textures(cub) == NULL || cub->person == NULL || cub->sprite == NULL)
 		return (NULL);
 	return (cub);

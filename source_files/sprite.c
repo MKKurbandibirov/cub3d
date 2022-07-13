@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 12:26:41 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/12 15:10:07 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:23:47 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ void	drawing(t_cub *cub)
 	int	color;
 
 	stripe = cub->sprite->draw_start_x;
+	// ft_bzero(cub->sprite->addr, TEX_HEIGHT + TEX_WIDTH * cub->sprite->bits_per_pixel / 8);
 	while (stripe < cub->sprite->draw_end_x)
 	{
 		cub->sprite->tex_x = (int)(256 * (stripe - (-cub->sprite->sprite_width
 						/ 2 + cub->sprite->sprite_screen_x))
-				* TEX_WIDTH / cub->sprite->sprite_width) / 256;
+				* cub->sprite->height / cub->sprite->sprite_width) / 256;
 		if (cub->sprite->transform_y > 0 && stripe > 0 && stripe < WIN_WIDTH
 			&& cub->sprite->transform_y < cub->sprite->z_buff[stripe])
 		{
@@ -52,16 +53,24 @@ void	drawing(t_cub *cub)
 			{
 				d = y * 256 - WIN_HEIGHT * 128
 					+ cub->sprite->sprite_height * 128;
-				cub->sprite->tex_y = (d * TEX_HEIGHT
+				cub->sprite->tex_y = (d * cub->sprite->height
 						/ cub->sprite->sprite_height) / 256;
-				color = (((unsigned int)cub->sprite->addr[cub->rays->tex_y * cub->sprite->line_length
+				color = (((unsigned char)cub->sprite->addr[cub->rays->tex_y * cub->sprite->line_length
 							+ cub->sprite->tex_x * cub->sprite->bits_per_pixel / 8]) << 16
-						| ((unsigned int)cub->sprite->addr[cub->sprite->tex_y * cub->sprite->line_length
+						| ((unsigned char)cub->sprite->addr[cub->sprite->tex_y * cub->sprite->line_length
 							+ cub->sprite->tex_x * cub->sprite->bits_per_pixel / 8 + 1]) << 8
-						| (unsigned int)cub->sprite->addr[cub->sprite->tex_y * cub->sprite->line_length
+						| (unsigned char)cub->sprite->addr[cub->sprite->tex_y * cub->sprite->line_length
 						+ cub->sprite->tex_x * cub->sprite->bits_per_pixel / 8 + 2]);
+				// printf("%d\n", color);
 				if ((color & 0x00FFFFFF) != 0)
-					my_put_pixel(cub, stripe, y, color);
+				{
+					// my_put_pixel(cub, stripe, y, 0x00FFFFFF);
+					my_put_pixel(cub, stripe, y, color);	
+				}
+				else
+				{
+					printf("xaxaxa");
+				}
 				y++;
 			}
 		}
@@ -73,7 +82,8 @@ void	draw_sprite(t_cub *cub)
 {
 	double	inv_det;
 
-	inv_det = 1.0;
+	inv_det = 1.0 / (cub->person->plane_x * cub->person->dir_y
+			- cub->person->plane_y * cub->person->dir_x);
 	cub->sprite->sprite_x = cub->sprite->pos_x - cub->person->pos_x;
 	cub->sprite->sprite_y = cub->sprite->pos_y - cub->person->pos_y;
 	cub->sprite->transform_x = inv_det * (cub->person->dir_y

@@ -3,7 +3,7 @@ static char *_646dc3ad0ee48b0f5b5d70283ee72ddEBEiAghFx9mn9DW5[] = {
 /* columns rows colors chars-per-pixel */
 "64 64 256 2 ",
 "   c black",
-".  c #1F170B",
+".  c grey11",
 "X  c #170F07",
 "o  c #4B4B4B",
 "O  c white",
@@ -79,7 +79,7 @@ static char *_646dc3ad0ee48b0f5b5d70283ee72ddEBEiAghFx9mn9DW5[] = {
 "R  c #5F4323",
 "E  c #533F1F",
 "W  c #4B371B",
-"Q  c #3F2F17",
+"Q  c grey11",
 "!  c #332B13",
 "~  c #2B230F",
 "^  c #EFEFEF",
