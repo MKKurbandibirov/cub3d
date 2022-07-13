@@ -18,9 +18,13 @@ static void	ft_init_prs(t_prs *prs, t_cub *cub)
 
 	i = 0;
 	prs->len_lists = 0;
+	prs->cnt_ewns = 0;
 	prs->texture = (t_texture *) malloc(sizeof(t_texture) * 1);
+	if (!prs->texture)
+		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
 	while (i < 6)
 		prs->texture->massiv[i++] = NULL;
+	prs->texture->check_cnt = 0;
 	prs->cub = cub;
 	prs->preprs = NULL;
 	prs->map = NULL;

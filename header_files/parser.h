@@ -6,7 +6,7 @@
 /*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:36:00 by gtaggana          #+#    #+#             */
-/*   Updated: 2022/07/12 10:42:35 by gtaggana         ###   ########.fr       */
+/*   Updated: 2022/07/13 00:50:08 by gtaggana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct s_prs
 	int			**map;
 	t_texture	*texture;
 	t_plist		*preprs;
+	int			h;
+	int			w;
+	int			cnt_ewns;
 	int			len_lists;
 	t_cub		*cub;
 }	t_prs;
@@ -59,5 +62,9 @@ int		ft_is_map(char *line);
 
 // prepars_continue.c
 int		ft_status(char *s);
+char	*ft_curr_word(char *s, int i, int cnt);
+int		ft_search_settings(char	*s, t_prs **prs, int i, int status);
+void	ft_get_path(t_prs *prs);
+void	ft_create_lists(t_prs **prs, char *path);
 
 #endif

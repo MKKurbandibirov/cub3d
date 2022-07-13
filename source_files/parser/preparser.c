@@ -12,76 +12,116 @@
 
 #include "../../header_files/parser.h"
 
-char	*ft_curr_word(char *s)
+void	ft_skip_endl(t_prs *prs)
 {
-	int		i;
-	char	*curr;
-	char	prev_c;
+	t_plist	*curr;
 
-	prev_c = '0';
-	while(s[i] && !ft_isspace(s))
+	curr = prs->preprs;
+	while (curr && !ft_is_map(curr->data))
+	{
+		ft_search_settings(curr->data, &prs, 0, 0);
+		ft_delelem(&prs->preprs, prs->preprs, prs);
+		curr = curr->next;
+	}
 }
 
-int	ft_search_settings(char	*s, t_prs **prs)
+int	ft_wight_map(t_prs *prs)
 {
-	int	i;
-	int	status;
+	t_plist	*curr;
+	int		old;
+	int		cr;
 
-	if (!s)
-		return (-1);
-	i = 0;
-	if (ft_search_parties(s))
+	cr = -1;
+	curr = prs->preprs;
+	while (curr)
 	{
-		while (s[i])
+		old = ft_strlen(curr->data);
+		curr = curr->next;
+		if (curr)
 		{
-			status = ft_status(&s[i]);
-			if (status == -1)
-				return (-2);
-			i += 2;
-			i += ft_skip_space(&s[i]);
-			if (!s[i] || s[i] == '\n')
-				return (-2);
-			if ((*prs)->texture->massiv[status] == NULL)
-			{
-				(*prs)->texture->massiv[status] = ft_strdup(&s[i]);
-				(*prs)->texture->check_cnt += 1;
-			}
-			else
-				return (-2);
-			i++;
+			cr = ft_strlen(curr->data);
+			if (cr != old)
+				exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
 		}
 	}
-	return (0);
+	return (cr);
 }
 
-void	ft_create_lists(t_prs **prs, char *path)
+void	ft_get_param_and_init_map(t_prs *prs)
 {
-	int		fd;
-	char	*line;
+	int	i;
 
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
+	if (prs->preprs == NULL)
+		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	prs->h = prs->len_lists;
+	prs->w = ft_wight_map(prs);
+	if (prs->h < 3 || prs->w < 3)
+		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	i = 0;
+	prs->map = (int **) malloc(sizeof(int *) * prs->h);
+	if (!prs->map)
+		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	while (i < prs->h)
 	{
-		ft_strerr("Problems reading a file\n");
-		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
+		prs->map[i] = (int *)malloc(sizeof(int) * prs->w);
+		if (!prs->map[i])
+			exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
 	}
-	line = get_next_line(fd);
-	while (line)
+}
+
+void	ft_fill_map(t_prs *prs, int i, int j, char curr)
+{
+	if (curr == '1')
+		prs->map[j][i] = WALL;
+	else if (curr == '0')
+		prs->map[j][i] = FLOOR;
+	else if (curr == ' ')
+		prs->map[j][i] = EMPTY;
+	else if (prs->cnt_ewns < 1 && (curr == 'N'
+			|| curr == 'E' || curr == 'W' || curr == 'S'))
 	{
-		ft_pushback_p(&(*prs)->preprs, line, *prs);
-		line = get_next_line(fd);
+		prs->cnt_ewns++;
+		if (curr == 'N')
+			prs->map[j][i] = NORTH;
+		else if (curr == 'E')
+			prs->map[j][i] = EAST;
+		else if (curr == 'W')
+			prs->map[j][i] = WEST;
+		else
+			prs->map[j][i] = SOUTH;
+	}
+	else
+		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+}
+
+//i -- w j -- h
+void	ft_get_map(t_prs *prs, int i, int j)
+{
+	t_plist	*curr;
+
+	curr = prs->preprs;
+	while (curr)
+	{
+		i = 0;
+		while (curr->data[i])
+		{
+			ft_fill_map(prs, i, j, curr->data[i]);
+			i++;
+		}
+		j++;
+		ft_delelem(&prs->preprs, prs->preprs, prs);
+		curr = curr->next;
 	}
 }
 
 void	ft_preparser(t_prs *prs, char *path)
 {
-	t_plist	*curr;
-
 	ft_create_lists(&prs, path);
-	curr = prs->preprs;
-	while (curr)
+	ft_get_path(prs);
+	if (prs->preprs != NULL)
 	{
-		ft_search_settings(curr->data, &prs);
-		curr = curr->next;
+		ft_skip_endl(prs);
+		ft_get_param_and_init_map(prs);
+		ft_get_map(prs, 0, 0);
 	}
 }
