@@ -6,12 +6,14 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:39:53 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/13 17:54:22 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:04:43 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+# include <time.h>
 
 # include <stdio.h>
 # include <unistd.h>
@@ -23,8 +25,6 @@
 
 # define WIN_HEIGHT 1200
 # define WIN_WIDTH 1800
-# define TEX_HEIGHT 64
-# define TEX_WIDTH 64
 
 # define NORTH 2
 # define SOUTH 3
@@ -40,9 +40,9 @@
 # define ROTATE_L 123
 # define ROTATE_R 124
 
-# define FLOOR 0
-# define WALL 1
-# define EMPTY -1
+# define FLOOR '0'
+# define WALL '1'
+# define EMPTY ' '
 
 # define EXIT_KEY 53
 
@@ -122,7 +122,6 @@ typedef struct s_sprite
 	double	z_buff[WIN_WIDTH];
 }	t_sprite;
 
-
 typedef struct s_mlx
 {
 	void		*mlx_ptr;
@@ -136,9 +135,11 @@ typedef struct s_mlx
 
 typedef struct s_cub
 {
+	time_t 		start;
+	time_t		end;
 	int			map_height;
 	int			map_width;
-	int			**map;
+	char		**map;
 	char		*map_path;
 	t_mlx		*mlx;
 	t_rays		*rays;
@@ -147,7 +148,8 @@ typedef struct s_cub
 	t_texture	*so_tex;
 	t_texture	*we_tex;
 	t_texture	*ea_tex;
-	t_sprite	*sprite;
+	t_sprite	**sprite;
+	int			curr_spr;
 }	t_cub;
 
 /*---------------- Initialization ----------------*/
@@ -159,7 +161,7 @@ t_texture	*texture_init(char *path, t_mlx *mlx);
 t_sprite	*sprite_init(char *path, t_cub *cub);
 
 /*------------------ Destroing -------------------*/
-void		map_free(int **map, int length);
+void		map_free(char **map, int length);
 void		cub_destroy(t_cub *cub);
 
 /*-------------------- Utils ---------------------*/
@@ -168,7 +170,7 @@ void		print_map(t_cub *cub);
 void		my_put_pixel(t_cub *cub, int x, int y, int color);
 
 /*------------------ Raycasting ------------------*/
-void		raycasting(t_cub *cub);
+void		raycasting(t_cub *cub, int i);
 void		tex_computation(t_cub *cub);
 void		dda_computation(t_cub *cub);
 void		distance_computation(t_cub *cub);
@@ -179,7 +181,7 @@ void		moving(t_cub *cub, int keycode);
 void		rotating(t_cub *cub, int keycode);
 int			mouse_rotate(int x, int y, t_cub *cub);
 
-void		draw_sprite(t_cub *cub);
+void		draw_sprite(t_cub *cub, int i);
 void		my_put_spixel(t_sprite *spr, int x, int y, int color);
 
 #endif

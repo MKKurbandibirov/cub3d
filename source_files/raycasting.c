@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 15:09:40 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/13 16:31:45 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:10:07 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	draw(t_cub *cub, t_texture *tex, int x)
 	draw_floor_ceil(cub, x, 0x0095A7C0, 0x005D814E);
 }
 
-void	raycasting(t_cub *cub)
+void	raycasting(t_cub *cub, int i)
 {
 	int	x;
 
@@ -81,7 +81,7 @@ void	raycasting(t_cub *cub)
 			draw(cub, cub->ea_tex, x);
 		else if (cub->rays->side == 1 && cub->rays->ray_dir_y < 0)
 			draw(cub, cub->we_tex, x);
-		cub->sprite->z_buff[x] = cub->rays->perp_wall_dist;
+		cub->sprite[i]->z_buff[x] = cub->rays->perp_wall_dist;
 		x++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:19:22 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/13 18:16:35 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:46:03 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ int	rendering(t_cub *cub)
 {
 	ft_bzero(cub->mlx->addr, WIN_HEIGHT + WIN_WIDTH
 		* (cub->mlx->bits_per_pixel / 8));
-	raycasting(cub);
-	draw_sprite(cub);
+	raycasting(cub, cub->curr_spr);
+	cub->end = clock();
+	draw_sprite(cub, cub->curr_spr);
+	if ((cub->start - cub->end) % 2 == 0)
+		cub->curr_spr = (cub->curr_spr + 1) % 10;
 	mlx_put_image_to_window(cub->mlx->mlx_ptr,
 		cub->mlx->win_ptr, cub->mlx->img_ptr, 0, 0);
 	return (0);
@@ -46,8 +49,7 @@ int	main(int argc, char **argv)
 	{
 		cub = cub_init(argv[1]);
 		if (cub == NULL)
-			print_err("[ERROR]: MLX initialization error");
-		print_map(cub);
+			print_err("[ERROR]: MLX initialization error");;
 		mlx_hook(cub->mlx->win_ptr, 2, 0, hooking, cub);
 		mlx_hook(cub->mlx->win_ptr, 17, 0, on_destroy, cub);
 		mlx_hook(cub->mlx->win_ptr, 6, 0, mouse_rotate, cub);

@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:19:58 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/13 15:36:57 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:59:33 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,38 @@ void	moving(t_cub *cub, int keycode)
 	if (keycode == FORWARD)
 	{
 		if (cub->map[(int)(cub->person->pos_x + cub->person->dir_x
-				* MOVESPEED)][(int)cub->person->pos_y] == 0)
+				* MOVESPEED)][(int)cub->person->pos_y] == '0')
 			cub->person->pos_x += cub->person->dir_x * MOVESPEED;
 		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
-			+ cub->person->dir_y * MOVESPEED)] == 0)
+			+ cub->person->dir_y * MOVESPEED)] == '0')
 			cub->person->pos_y += cub->person->dir_y * MOVESPEED;
 	}
 	if (keycode == BACKWARD)
 	{
 		if (cub->map[(int)(cub->person->pos_x - cub->person->dir_x
-				* MOVESPEED)][(int)cub->person->pos_y] == 0)
+				* MOVESPEED)][(int)cub->person->pos_y] == '0')
 			cub->person->pos_x -= cub->person->dir_x * MOVESPEED;
 		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
-			- cub->person->dir_y * MOVESPEED)] == 0)
+			- cub->person->dir_y * MOVESPEED)] == '0')
 			cub->person->pos_y -= cub->person->dir_y * MOVESPEED;
-	}
-	if (keycode == RIGHT)
-	{
-		if (cub->map[(int)(cub->person->pos_x + sin(cub->person->dir_x)
-				* MOVESPEED)][(int)cub->person->pos_y] == 0)
-			cub->person->pos_x += sin(cub->person->dir_x) * MOVESPEED;
-		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
-			+ sin(cub->person->dir_y) * MOVESPEED)] == 0)
-			cub->person->pos_y += cos(cub->person->dir_y) * MOVESPEED;
 	}
 	if (keycode == LEFT)
 	{
-		if (cub->map[(int)(cub->person->pos_x - cos(cub->person->dir_x)
-				* MOVESPEED)][(int)cub->person->pos_y] == 0)
-			cub->person->pos_x -= cos(cub->person->dir_x) * MOVESPEED;
+		if (cub->map[(int)(cub->person->pos_x - cub->person->dir_y
+				* MOVESPEED)][(int)cub->person->pos_y] == '0')
+			cub->person->pos_x -= (cub->person->dir_y * MOVESPEED);
 		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
-			- sin(cub->person->dir_y) * MOVESPEED)] == 0)
-			cub->person->pos_y -= sin(cub->person->dir_y) * MOVESPEED;
+			+ cub->person->dir_x * MOVESPEED)] == '0')
+			cub->person->pos_y += cub->person->dir_x * MOVESPEED;
+	}
+	if (keycode == RIGHT)
+	{
+		if (cub->map[(int)(cub->person->pos_x + cub->person->dir_y
+				* MOVESPEED)][(int)cub->person->pos_y] == '0')
+			cub->person->pos_x += (cub->person->dir_y * MOVESPEED);
+		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
+			- cub->person->dir_x * MOVESPEED)] == '0')
+			cub->person->pos_y -= cub->person->dir_x * MOVESPEED;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:44:33 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/13 16:11:58 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:08:13 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	dda_computation(t_cub *cub)
 			cub->rays->map_y += cub->rays->step_y;
 			cub->rays->side = 1;
 		}
-		if (cub->map[cub->rays->map_x][cub->rays->map_y] > 0)
+		if (cub->map[cub->rays->map_x][cub->rays->map_y] != '0')
 			cub->rays->hit = 1;
 	}
 	if (cub->rays->side == 0)

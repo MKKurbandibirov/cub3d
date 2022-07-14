@@ -6,13 +6,13 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:42:36 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/10 14:38:49 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:11:02 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
 
-void	map_free(int **map, int height)
+void	map_free(char **map, int height)
 {
 	int	i;
 
