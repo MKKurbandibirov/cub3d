@@ -31,12 +31,12 @@ int	ft_status(char *s)
 	return (-1);
 }
 
-char	*ft_curr_word(char *s, int i, int cnt)
+char	*ft_curr_word(char *s, int i, int cnt, char prev_c)
 {
 	char	*curr;
-	char	prev_c;
 
-	prev_c = '0';
+	if (s[0] && s[1] && s[0] == '.' && s[1] == '/')
+		i += 2;
 	while (s[i] && (!ft_isspace(s[i]) || (s[i] == ' ' && prev_c == '\\')))
 	{
 		if (s[i] != ' ' && s[i] != '\n')
@@ -46,6 +46,8 @@ char	*ft_curr_word(char *s, int i, int cnt)
 	}
 	curr = (char *) malloc(sizeof(char) * (cnt + 1));
 	i = 0;
+	if (s[0] && s[1] && s[0] == '.' && s[1] == '/')
+		i += 2;
 	cnt = 0;
 	while (s[i] && (!ft_isspace(s[i]) || (s[i] == ' ' && prev_c == '\\')))
 	{
@@ -76,7 +78,7 @@ int	ft_search_settings(char	*s, t_prs **prs, int i, int status)
 				return (-2);
 			if ((*prs)->texture->massiv[status] == NULL)
 			{
-				(*prs)->texture->massiv[status] = ft_curr_word(&s[i], 0, 0);
+				(*prs)->texture->massiv[status] = ft_curr_word(&s[i], 0, 0, '0');
 				(*prs)->texture->check_cnt += 1;
 				return (0);
 			}

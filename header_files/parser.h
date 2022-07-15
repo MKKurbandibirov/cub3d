@@ -32,13 +32,16 @@ typedef struct s_plist
 
 typedef struct s_prs
 {
-	int			**map;
+	char		**map;
+	int			*strlen;
+	int			max_len_str;
 	t_texture	*texture;
 	t_plist		*preprs;
-	int			h;
-	int			w;
-	int			cnt_ewns;
 	int			len_lists;
+	int			cnt_str_in_map;
+	int			cnt_ewns;
+	int			cnt_doors;
+	int			cnt_yoda;
 	t_cub		*cub;
 }	t_prs;
 
@@ -62,9 +65,17 @@ int		ft_is_map(char *line);
 
 // prepars_continue.c
 int		ft_status(char *s);
-char	*ft_curr_word(char *s, int i, int cnt);
+char	*ft_curr_word(char *s, int i, int cnt, char prev_c);
 int		ft_search_settings(char	*s, t_prs **prs, int i, int status);
 void	ft_get_path(t_prs *prs);
 void	ft_create_lists(t_prs **prs, char *path);
+
+//map.c
+void	ft_horizontal_checking(t_prs *prs);
+void	ft_verticatl_checking(t_prs *prs);
+
+//dirty_utils.c
+char	*ft_strtrim_v1(char *s1, char *set);
+int		ft_dirty_strlen(char *s, int i, t_prs *prs);
 
 #endif

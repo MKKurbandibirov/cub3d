@@ -18,7 +18,7 @@ PATH_LFT	=	libft/
 
 PATH_OBJ	=	./object_files/
 
-FILE_PRS	=	parser.c prepars_list_func.c preparser.c prepars_continue.c utils.c
+FILE_PRS	=	parser.c prepars_list_func.c preparser.c prepars_continue.c utils.c map.c dity_utils.c
 
 FILE_SRC	=	main.c initialization.c utils.c cub_destroy.c utils.c
 
