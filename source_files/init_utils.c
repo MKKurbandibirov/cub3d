@@ -63,8 +63,8 @@ t_sprite	*sprite_init(char *path, t_cub *cub)
 	if (sprite == NULL)
 		return (NULL);
 	sprite->path = path;
-	sprite->pos_x = 17; /*Change after parsing*/
-	sprite->pos_y = 23; /*Change after parsing*/
+	sprite->pos_x = cub->sprite_pos_x;
+	sprite->pos_y = cub->sprite_pos_y;
 	sprite->img_ptr = mlx_xpm_file_to_image(cub->mlx->mlx_ptr,
 			path, &sprite->width, &sprite->height);
 	if (sprite->img_ptr == NULL)

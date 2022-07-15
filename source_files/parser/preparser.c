@@ -12,6 +12,52 @@
 
 #include "../../header_files/parser.h"
 
+void	ft_alloc(t_prs *prs)
+{
+	int	i;
+
+	prs->cub->doors_pos = (int **)malloc(sizeof(int *) * prs->cnt_doors);
+	if (prs->cub->doors_pos == NULL)
+		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	i = 0;
+	while (i < prs->cnt_doors)
+	{
+		prs->cub->doors_pos[i] = (int *)malloc(sizeof(int) * 2);
+		if (prs->cub->doors_pos[i] == NULL)
+			exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+		i++;
+	}
+}
+
+void	ft_coord(t_prs *prs, int i, int j)
+{
+	while (prs->map[i])
+	{
+		j = 0;
+		while (prs->map[i][j])
+		{
+			if (prs->map[i][j] == 'N' || prs->map[i][j] == 'S'
+				|| prs->map[i][j] == 'W' || prs->map[i][j] == 'E')
+			{
+				prs->cub->person->pos_x = i;
+				prs->cub->person->pos_y = j;
+			}
+			else if (prs->map[i][j] == 'Y')
+			{
+				prs->cub->sprite_pos_x = i;
+				prs->cub->sprite_pos_y = j;
+			}
+			else if (prs->map[i][j] == 'D')
+			{
+				prs->cub->doors_pos[prs->curr_door][0] = i;
+				prs->cub->doors_pos[prs->curr_door++][1] = j;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	ft_valid_cnt(t_prs *prs)
 {
 	if (prs->cnt_ewns != 1)
@@ -52,8 +98,11 @@ void	ft_preparser(t_prs *prs, char *path)
 		ft_alloc_map(prs);
 		ft_get_map(prs, 0);
 		ft_valid_cnt(prs);
-		ft_verticatl_checking(prs);
+		ft_verticatl_checking(prs, 0, 0);
 		ft_horizontal_checking(prs);
+		ft_alloc(prs);
+		ft_coord(prs, 0, 0);
+		prs->cub->map = prs->map;
 		printf("cart -- good");
 	}
 	else

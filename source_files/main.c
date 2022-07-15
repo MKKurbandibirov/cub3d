@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc == 2)
 	{
-		cub = cub_init();
+		cub = cub_init(argv[1]);
 		if (cub == NULL)
 		{
 			print_err("[ERROR]: MLX initialization error");

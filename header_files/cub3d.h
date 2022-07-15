@@ -102,11 +102,11 @@ typedef struct s_sprite
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	char	*path;  /*Change after parsing*/
+	char	*path;
 	int		height;
 	int		width;
-	int		pos_x; /*Change after parsing*/
-	int		pos_y; /*Change after parsing*/
+	int		pos_x;
+	int		pos_y;
 	double	sprite_x;
 	double	sprite_y;
 	double	transform_x;
@@ -150,12 +150,18 @@ typedef struct s_cub
 	t_texture	*ea_tex;
 	t_texture	*door;
 	t_sprite	**sprite;
+	char		**sprite_texture;
+	int			cnt_texture_sp;
+	int			sprite_pos_x;
+	int			sprite_pos_y;
 	int			curr_spr;
 	int			**doors_pos; /*Change after parsing*/
 }	t_cub;
 
+# include "parser.h"
+
 /*---------------- Initialization ----------------*/
-t_cub		*cub_init(void);
+t_cub		*cub_init(char *argv);
 void		*set_textures(t_cub *cub);
 t_person	*person_init(int dir);
 t_mlx		*t_mlx_init(void);

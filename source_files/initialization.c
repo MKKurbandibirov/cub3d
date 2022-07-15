@@ -66,35 +66,29 @@ static char	**get_map(int length, int width)
 
 t_sprite	**set_sprites(t_cub *cub)
 {
+	int			i;
 	t_sprite	**sprite;
 
-	sprite = (t_sprite **)malloc(sizeof(t_sprite *) * 12);
+	sprite = (t_sprite **)malloc(sizeof(t_sprite *) * cub->cnt_texture_sp);
 	if (sprite == NULL)
 		return (NULL);
-	sprite[0] = sprite_init("textures/1.xpm", cub); /*Change after parsing*/
-	sprite[1] = sprite_init("textures/2.xpm", cub);
-	sprite[2] = sprite_init("textures/3.xpm", cub);
-	sprite[3] = sprite_init("textures/4.xpm", cub);
-	sprite[4] = sprite_init("textures/5.xpm", cub);
-	sprite[5] = sprite_init("textures/6.xpm", cub);
-	sprite[6] = sprite_init("textures/7.xpm", cub);
-	sprite[7] = sprite_init("textures/8.xpm", cub);
-	sprite[8] = sprite_init("textures/8.xpm", cub);
-	sprite[9] = sprite_init("textures/12.xpm", cub);
-	sprite[10] = sprite_init("textures/11.xpm", cub);
-	sprite[11]= NULL;
+	i = -1;
+	while (cub->sprite_texture[++i])
+		sprite[i] = sprite_init(cub->sprite_texture[i], cub);
+	sprite[i] = NULL;
 	return (sprite);
 }
 
 // int	**door_pos_init()
 
-t_cub	*cub_init(void)
+t_cub	*cub_init(char *argv)
 {
 	t_cub	*cub;
 
 	cub = (t_cub *)malloc(sizeof(t_cub));
 	if (cub == NULL)
 		return (NULL);
+	ft_parser(argv, cub);
 	cub->curr_spr = 0;
 	cub->start = clock();
 	cub->map_height = 50; /*Change after parsing*/

@@ -52,7 +52,7 @@ int	ft_is_map(char *line)
 	i = 0;
 	while (line[i] && (line[i] == '1' || line[i] == '0' || line[i] == ' '
 			|| line[i] == 'N' || line[i] == 'E' || line[i] == 'S'
-			|| line[i] == 'W'))
+			|| line[i] == 'W' || line[i] == 'Y' || line[i] == 'D'))
 		i++;
 	if (!line[i] || line[i] == '\n')
 		return (1);

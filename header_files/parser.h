@@ -16,33 +16,40 @@
 # include <fcntl.h>
 # include "cub3d.h"
 
-typedef struct s_texture
+typedef struct s_plist	t_plist;
+typedef struct s_texture_prs
 {
-	char	*massiv[6];
-	int		check_cnt;
-}	t_texture;
+	char		*massiv[6];
+	char		**sprite;
+	t_plist		*lst;
+	int			cnt_lst;
+	int			check_cnt;
+}	t_texture_prs;
 
 typedef struct s_plist
 {
 	int				id;
 	char			*data;
-	struct s_plist	*next;
-	struct s_plist	*prev;
+	t_plist			*next;
+	t_plist			*prev;
 }	t_plist;
 
 typedef struct s_prs
 {
-	char		**map;
-	int			*strlen;
-	int			max_len_str;
-	t_texture	*texture;
-	t_plist		*preprs;
-	int			len_lists;
-	int			cnt_str_in_map;
-	int			cnt_ewns;
-	int			cnt_doors;
-	int			cnt_yoda;
-	t_cub		*cub;
+	char			**map;
+	int				*strlen;
+	int				max_len_str;
+	t_texture_prs	*texture;
+	t_plist			*preprs;
+	int				len_lists;
+	int				cnt_str_in_map;
+	int				cnt_ewns;
+	int				cnt_doors;
+	int				cnt_yoda;
+	int				sprite_pos_x;
+	int				sprite_pos_y;
+	int				curr_door;
+	t_cub			*cub;
 }	t_prs;
 
 //prepars_list_func.c
@@ -72,7 +79,7 @@ void	ft_create_lists(t_prs **prs, char *path);
 
 //map.c
 void	ft_horizontal_checking(t_prs *prs);
-void	ft_verticatl_checking(t_prs *prs);
+void	ft_verticatl_checking(t_prs *prs, int start, int end);
 
 //dirty_utils.c
 char	*ft_strtrim_v1(char *s1, char *set);

@@ -36,15 +36,14 @@ void	ft_horizontal_checking(t_prs *prs)
 	}
 }
 
-void	ft_verticatl_checking(t_prs *prs)
+void	ft_verticatl_checking(t_prs *prs, int start, int end)
 {
-	int	start;
-	int	end;
 	int	i;
 
 	i = 0;
 	while (i < prs->max_len_str)
 	{
+		start = 0;
 		end = prs->cnt_str_in_map;
 		while (prs->map[start] && (prs->strlen[start] <= i
 				|| (prs->map[start][i] && prs->map[start][i] == ' ')))
