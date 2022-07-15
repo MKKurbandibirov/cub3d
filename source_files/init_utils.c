@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:30:29 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:47:59 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:54:41 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ void	*set_textures(t_cub *cub)
 		return (NULL);
 	cub->ea_tex = texture_init("textures/ea_wall.xpm", cub->mlx);
 	if (cub->ea_tex == NULL)
+		return (NULL);
+	cub->door = texture_init("textures/door.xpm", cub->mlx);
+	if (cub->door == NULL)
 		return (NULL);
 	return (cub);
 }

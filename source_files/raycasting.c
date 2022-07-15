@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 15:09:40 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:10:07 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:10:47 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,34 @@ void	raycasting(t_cub *cub, int i)
 		dda_computation(cub);
 		tex_computation(cub);
 		if (cub->rays->side == 0 && cub->rays->ray_dir_x > 0)
-			draw(cub, cub->so_tex, x);
+		{
+			if (cub->map[cub->rays->map_x][cub->rays->map_y] == DOOR)
+				draw(cub, cub->door, x);
+			else
+				draw(cub, cub->so_tex, x);
+		}
 		else if (cub->rays->side == 0 && cub->rays->ray_dir_x < 0)
-			draw(cub, cub->no_tex, x);
+		{
+			if (cub->map[cub->rays->map_x][cub->rays->map_y] == DOOR)
+				draw(cub, cub->door, x);
+			else
+				draw(cub, cub->no_tex, x);
+		}
 		else if (cub->rays->side == 1 && cub->rays->ray_dir_y > 0)
-			draw(cub, cub->ea_tex, x);
+		{
+			if (cub->map[cub->rays->map_x][cub->rays->map_y] == DOOR)
+				draw(cub, cub->door, x);
+			else
+				draw(cub, cub->ea_tex, x);
+		}
 		else if (cub->rays->side == 1 && cub->rays->ray_dir_y < 0)
-			draw(cub, cub->we_tex, x);
-		cub->sprite[i]->z_buff[x] = cub->rays->perp_wall_dist;
+		{
+			if (cub->map[cub->rays->map_x][cub->rays->map_y] == DOOR)
+				draw(cub, cub->door, x);
+			else
+				draw(cub, cub->we_tex, x);
+		}
+		cub->sprite[i]->z_buff[x] = cub->rays->perp_wall_dist; /* Change after parse */
 		x++;
 	}
 }

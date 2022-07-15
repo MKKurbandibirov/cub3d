@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:29:05 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/13 17:54:06 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:49:58 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	print_map(t_cub *cub)
 		j = 0;
 		while (j < cub->map_width)
 		{
-			printf("%d", cub->map[i][j]);
+			printf("%c", cub->map[i][j]);
 			j++;
 		}
 		printf("\n");

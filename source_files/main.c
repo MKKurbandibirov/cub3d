@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:19:22 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:46:03 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:26:42 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	hooking(int keycode, t_cub *cub)
 		on_destroy(cub);
 	moving(cub, keycode);
 	rotating(cub, keycode);
+	if (!door_open(cub, keycode))
+		door_close(cub, keycode);
 	return (0);
 }
 
@@ -49,7 +51,8 @@ int	main(int argc, char **argv)
 	{
 		cub = cub_init(argv[1]);
 		if (cub == NULL)
-			print_err("[ERROR]: MLX initialization error");;
+			print_err("[ERROR]: MLX initialization error");
+		print_map(cub);
 		mlx_hook(cub->mlx->win_ptr, 2, 0, hooking, cub);
 		mlx_hook(cub->mlx->win_ptr, 17, 0, on_destroy, cub);
 		mlx_hook(cub->mlx->win_ptr, 6, 0, mouse_rotate, cub);

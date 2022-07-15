@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:26:17 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:48:41 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:44:23 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ static void	fill_map(t_cub *cub)
 			if (i == 0 || i == cub->map_height - 1
 				|| j == 0 || j == cub->map_width - 1)
 				cub->map[i][j] = WALL;
-			else if (i == 10 && j == 10)
+			else if (i == 15 && j != 25 && j != 20)
 				cub->map[i][j] = WALL;
+			else if (i == 15 && j == 25)
+				cub->map[i][j] = DOOR;
+			else if (i == 15 && j == 20)
+				cub->map[i][j] = DOOR;
 			else
 				cub->map[i][j] = FLOOR;
 			j++;
@@ -81,6 +85,8 @@ t_sprite	**set_sprites(t_cub *cub)
 	return (sprite);
 }
 
+// int	**door_pos_init()
+
 t_cub	*cub_init(char *map_path)
 {
 	t_cub	*cub;
@@ -109,5 +115,13 @@ t_cub	*cub_init(char *map_path)
 	cub->person = person_init();
 	if (set_textures(cub) == NULL || cub->person == NULL)
 		return (NULL);
+	/* Change after parsing */
+	cub->doors_pos = malloc(sizeof(int *) * 2);
+	cub->doors_pos[0] = malloc(sizeof(int) * 2);
+	cub->doors_pos[0][0] = 15;
+	cub->doors_pos[0][1] = 25;
+	cub->doors_pos[1] = malloc(sizeof(int) * 2);
+	cub->doors_pos[1][0] = 15;
+	cub->doors_pos[1][1] = 20;
 	return (cub);
 }

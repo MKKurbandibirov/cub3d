@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:39:53 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:04:43 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:25:40 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 # define FLOOR '0'
 # define WALL '1'
 # define EMPTY ' '
+# define DOOR 'D'
+# define SPRITE 'S'
 
 # define EXIT_KEY 53
 
@@ -148,6 +150,8 @@ typedef struct s_cub
 	t_texture	*so_tex;
 	t_texture	*we_tex;
 	t_texture	*ea_tex;
+	t_texture	*door;
+	int			**doors_pos;
 	t_sprite	**sprite;
 	int			curr_spr;
 }	t_cub;
@@ -183,5 +187,8 @@ int			mouse_rotate(int x, int y, t_cub *cub);
 
 void		draw_sprite(t_cub *cub, int i);
 void		my_put_spixel(t_sprite *spr, int x, int y, int color);
+
+int			door_open(t_cub *cub, int keycode);
+int			door_close(t_cub *cub, int keycode);
 
 #endif
