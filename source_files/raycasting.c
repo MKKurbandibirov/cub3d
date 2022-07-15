@@ -5,29 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 15:09:40 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/08 15:33:40 by nfarfetc         ###   ########.fr       */
+/*   Created: 2022/07/15 15:20:04 by nfarfetc          #+#    #+#             */
+/*   Updated: 2022/07/15 15:29:04 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
 
-void	raycasting(t_cub *cub)
+static void	set_south(t_cub *cub, int x)
+{
+	if (cub->map[cub->rays->map_x][cub->rays->map_y] == DOOR)
+		draw(cub, cub->door, x);
+	else
+		draw(cub, cub->so_tex, x);
+}
+
+static void	set_north(t_cub *cub, int x)
+{
+	if (cub->map[cub->rays->map_x][cub->rays->map_y] == DOOR)
+		draw(cub, cub->door, x);
+	else
+		draw(cub, cub->no_tex, x);
+}
+
+static void	set_east(t_cub *cub, int x)
+{
+	if (cub->map[cub->rays->map_x][cub->rays->map_y] == DOOR)
+		draw(cub, cub->door, x);
+	else
+		draw(cub, cub->ea_tex, x);
+}
+
+static void	set_west(t_cub *cub, int x)
+{
+	if (cub->map[cub->rays->map_x][cub->rays->map_y] == DOOR)
+		draw(cub, cub->door, x);
+	else
+		draw(cub, cub->we_tex, x);
+}
+
+void	raycasting(t_cub *cub, int i)
 {
 	int	x;
 
-	while (1)
+	x = 0;
+	while (x < WIN_WIDTH)
 	{
-		x = 0;
-		while (x < cub->map_width)
-		{
-			cub->rays->camera_x = 2 * x / (double)cub->map_width - 1;
-			cub->rays->ray_dir_x = cub->rays->dir_x
-				+ cub->rays->plane_x * cub->rays->camera_x;
-			cub->rays->ray_dir_y = cub->rays->dir_y
-				+ cub->rays->plane_y * cub->rays->camera_x;
-			
-			x++;
-		}
+		direction_computation(cub, x);
+		distance_computation(cub);
+		dda_computation(cub);
+		tex_computation(cub);
+		if (cub->rays->side == 0 && cub->rays->ray_dir_x > 0)
+			set_south(cub, x);
+		else if (cub->rays->side == 0 && cub->rays->ray_dir_x < 0)
+			set_north(cub, x);
+		else if (cub->rays->side == 1 && cub->rays->ray_dir_y > 0)
+			set_east(cub, x);
+		else if (cub->rays->side == 1 && cub->rays->ray_dir_y < 0)
+			set_west(cub, x);
+		if (i != -1)
+			cub->sprite[i]->z_buff[x] = cub->rays->perp_wall_dist;/* Change after parse */
+		x++;
 	}
 }

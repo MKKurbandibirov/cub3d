@@ -2,9 +2,9 @@ NAME		=	cub3d
 
 CC			=	gcc
 
-# FLAGS		=	-Wall -Wextra -Werror -g
+FLAGS		=	-Wall -Wextra -Werror -g
 
-FLAGS		=	-Wall -Wextra -g
+# FLAGS		=	-Wall -Wextra -g
 
 INCL		= 	./header_files/
 
@@ -20,8 +20,8 @@ PATH_OBJ	=	./object_files/
 
 FILE_PRS	=	parser.c prepars_list_func.c preparser.c prepars_continue.c utils.c map.c dity_utils.c
 
-FILE_SRC	=	main.c initialization.c utils.c cub_destroy.c utils.c
-
+FILE_SRC	=	main.c initialization.c utils.c cub_destroy.c raycasting.c raycasting_utils.c init_utils.c raycasting_computation.c move.c sprite.c door.c person.c rotate.c
+				
 LIBFT_SRC	=	ft_atoi.c		ft_bzero.c		ft_calloc.c	ft_isalnum.c	ft_isalpha.c	ft_isascii.c	ft_isdigit.c	ft_isprint.c\
 				ft_itoa.c		ft_memchr.c	ft_memcmp.c 	ft_memcpy.c 	ft_memmove.c 	ft_memset.c	ft_putchar_fd.c	ft_strjoin_free.c\
 				ft_putendl_fd.c ft_putnbr_fd.c 	ft_putstr_fd.c 	ft_split.c 		ft_strchr.c 	ft_strcmp.c		ft_strdup.c		ft_striteri.c\
