@@ -42,3 +42,25 @@ int	ft_dirty_strlen(char *s, int i, t_prs *prs)
 		prs->max_len_str = i;
 	return (i);
 }
+
+void	ft_alloc_map(t_prs *prs)
+{
+	if (prs->preprs == NULL)
+		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	prs->map = (char **) malloc(sizeof(char *) * prs->len_lists + 1);
+	if (!prs->map)
+		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+}
+
+void	ft_skip_endl(t_prs *prs)
+{
+	t_plist	*curr;
+
+	curr = prs->preprs;
+	while (curr && !ft_is_map(curr->data))
+	{
+		ft_search_settings(curr->data, &prs, 0, 0);
+		ft_delelem(&prs->preprs, prs->preprs, prs);
+		curr = curr->next;
+	}
+}

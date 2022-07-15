@@ -77,5 +77,7 @@ void	ft_verticatl_checking(t_prs *prs);
 //dirty_utils.c
 char	*ft_strtrim_v1(char *s1, char *set);
 int		ft_dirty_strlen(char *s, int i, t_prs *prs);
+void	ft_alloc_map(t_prs *prs);
+void	ft_skip_endl(t_prs *prs);
 
 #endif

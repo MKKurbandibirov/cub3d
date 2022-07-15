@@ -12,25 +12,11 @@
 
 #include "../../header_files/parser.h"
 
-void	ft_skip_endl(t_prs *prs)
+void	ft_valid_cnt(t_prs *prs)
 {
-	t_plist	*curr;
-
-	curr = prs->preprs;
-	while (curr && !ft_is_map(curr->data))
-	{
-		ft_search_settings(curr->data, &prs, 0, 0);
-		ft_delelem(&prs->preprs, prs->preprs, prs);
-		curr = curr->next;
-	}
-}
-
-void	ft_alloc_map(t_prs *prs)
-{
-	if (prs->preprs == NULL)
+	if (prs->cnt_ewns != 1)
 		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
-	prs->map = (char **) malloc(sizeof(char *) * prs->len_lists + 1);
-	if (!prs->map)
+	if (prs->cnt_yoda > 1)
 		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
 }
 
