@@ -6,104 +6,60 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:19:58 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:59:33 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:59:55 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
 
+static void	move_forward(t_cub *cub)
+{
+	if (cub->map[(int)(cub->person->pos_x + cub->person->dir_x
+			* MOVESPEED)][(int)cub->person->pos_y] == '0')
+		cub->person->pos_x += cub->person->dir_x * MOVESPEED;
+	if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
+		+ cub->person->dir_y * MOVESPEED)] == '0')
+		cub->person->pos_y += cub->person->dir_y * MOVESPEED;
+}
+
+static void	move_backward(t_cub *cub)
+{
+	if (cub->map[(int)(cub->person->pos_x - cub->person->dir_x
+			* MOVESPEED)][(int)cub->person->pos_y] == '0')
+		cub->person->pos_x -= cub->person->dir_x * MOVESPEED;
+	if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
+		- cub->person->dir_y * MOVESPEED)] == '0')
+		cub->person->pos_y -= cub->person->dir_y * MOVESPEED;
+}
+
+static void	move_left(t_cub *cub)
+{
+	if (cub->map[(int)(cub->person->pos_x - cub->person->dir_y
+			* MOVESPEED)][(int)cub->person->pos_y] == '0')
+		cub->person->pos_x -= (cub->person->dir_y * MOVESPEED);
+	if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
+		+ cub->person->dir_x * MOVESPEED)] == '0')
+		cub->person->pos_y += cub->person->dir_x * MOVESPEED;
+}
+
+static void	move_right(t_cub *cub)
+{
+	if (cub->map[(int)(cub->person->pos_x + cub->person->dir_y
+			* MOVESPEED)][(int)cub->person->pos_y] == '0')
+		cub->person->pos_x += (cub->person->dir_y * MOVESPEED);
+	if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
+		- cub->person->dir_x * MOVESPEED)] == '0')
+		cub->person->pos_y -= cub->person->dir_x * MOVESPEED;
+}
+
 void	moving(t_cub *cub, int keycode)
 {
 	if (keycode == FORWARD)
-	{
-		if (cub->map[(int)(cub->person->pos_x + cub->person->dir_x
-				* MOVESPEED)][(int)cub->person->pos_y] == '0')
-			cub->person->pos_x += cub->person->dir_x * MOVESPEED;
-		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
-			+ cub->person->dir_y * MOVESPEED)] == '0')
-			cub->person->pos_y += cub->person->dir_y * MOVESPEED;
-	}
+		move_forward(cub);
 	if (keycode == BACKWARD)
-	{
-		if (cub->map[(int)(cub->person->pos_x - cub->person->dir_x
-				* MOVESPEED)][(int)cub->person->pos_y] == '0')
-			cub->person->pos_x -= cub->person->dir_x * MOVESPEED;
-		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
-			- cub->person->dir_y * MOVESPEED)] == '0')
-			cub->person->pos_y -= cub->person->dir_y * MOVESPEED;
-	}
+		move_backward(cub);
 	if (keycode == LEFT)
-	{
-		if (cub->map[(int)(cub->person->pos_x - cub->person->dir_y
-				* MOVESPEED)][(int)cub->person->pos_y] == '0')
-			cub->person->pos_x -= (cub->person->dir_y * MOVESPEED);
-		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
-			+ cub->person->dir_x * MOVESPEED)] == '0')
-			cub->person->pos_y += cub->person->dir_x * MOVESPEED;
-	}
+		move_left(cub);
 	if (keycode == RIGHT)
-	{
-		if (cub->map[(int)(cub->person->pos_x + cub->person->dir_y
-				* MOVESPEED)][(int)cub->person->pos_y] == '0')
-			cub->person->pos_x += (cub->person->dir_y * MOVESPEED);
-		if (cub->map[(int)cub->person->pos_x][(int)(cub->person->pos_y
-			- cub->person->dir_x * MOVESPEED)] == '0')
-			cub->person->pos_y -= cub->person->dir_x * MOVESPEED;
-	}
-}
-
-void	rotate_left(t_cub *cub)
-{
-	double	old_dir_x;
-	double	old_plane_x;
-
-	old_dir_x = cub->person->dir_x;
-	old_plane_x = cub->person->plane_x;
-	cub->person->dir_x = cub->person->dir_x * cos(ROTATESPEED)
-		- cub->person->dir_y * sin(ROTATESPEED);
-	cub->person->dir_y = old_dir_x * sin(ROTATESPEED)
-		+ cub->person->dir_y * cos(ROTATESPEED);
-	cub->person->plane_x = cub->person->plane_x * cos(ROTATESPEED)
-		- cub->person->plane_y * sin(ROTATESPEED);
-	cub->person->plane_y = old_plane_x * sin(ROTATESPEED)
-		+ cub->person->plane_y * cos(ROTATESPEED);
-}
-
-void	rotate_right(t_cub *cub)
-{
-	double	old_dir_x;
-	double	old_plane_x;
-
-	old_dir_x = cub->person->dir_x;
-	old_plane_x = cub->person->plane_x;
-	cub->person->dir_x = cub->person->dir_x * cos(-ROTATESPEED)
-		- cub->person->dir_y * sin(-ROTATESPEED);
-	cub->person->dir_y = old_dir_x * sin(-ROTATESPEED)
-		+ cub->person->dir_y * cos(-ROTATESPEED);
-	cub->person->plane_x = cub->person->plane_x * cos(-ROTATESPEED)
-		- cub->person->plane_y * sin(-ROTATESPEED);
-	cub->person->plane_y = old_plane_x * sin(-ROTATESPEED)
-		+ cub->person->plane_y * cos(-ROTATESPEED);
-}
-
-void	rotating(t_cub *cub, int keycode)
-{
-	if (keycode == ROTATE_R)
-		rotate_right(cub);
-	if (keycode == ROTATE_L)
-		rotate_left(cub);
-}
-
-int	mouse_rotate(int x, int y, t_cub *cub)
-{
-	(void)y;
-	if (x > 0 && x < WIN_WIDTH && abs(x - cub->person->mouse_x) > 5)
-	{
-		if (x - cub->person->mouse_x > 0)
-			rotate_right(cub);
-		else
-			rotate_left(cub);
-		cub->person->mouse_x = x;
-	}
-	return (0);
+		move_right(cub);
 }

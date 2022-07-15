@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:29:05 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/15 12:49:58 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:24:05 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,33 @@ void	my_put_pixel(t_cub *cub, int x, int y, int color)
 	}
 }
 
-void	my_put_spixel(t_sprite *spr, int x, int y, int color)
+int	on_destroy(t_cub *cub)
 {
-	char	*dst;
-
-	if (x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
-	{
-		dst = spr->addr + (y * spr->line_length
-				+ x * (spr->bits_per_pixel / 8));
-		*(unsigned int *)dst = color;
-	}
+	cub_destroy(cub);
+	exit(EXIT_SUCCESS);
 }
 
-void	print_map(t_cub *cub)
+int	hooking(int keycode, t_cub *cub)
 {
-	int	i;
-	int	j;
+	if (keycode == EXIT_KEY)
+		on_destroy(cub);
+	moving(cub, keycode);
+	rotating(cub, keycode);
+	if (!door_open(cub, keycode))
+		door_close(cub, keycode);
+	return (0);
+}
 
-	i = 0;
-	while (i < cub->map_height)
-	{
-		j = 0;
-		while (j < cub->map_width)
-		{
-			printf("%c", cub->map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-	printf("Length:\t%d\nWidth:\t%d\n", cub->map_height, cub->map_width);
+int	rendering(t_cub *cub)
+{
+	ft_bzero(cub->mlx->addr, WIN_HEIGHT + WIN_WIDTH
+		* (cub->mlx->bits_per_pixel / 8));
+	raycasting(cub, cub->curr_spr);
+	cub->end = clock();
+	draw_sprite(cub, cub->curr_spr);
+	if ((cub->start - cub->end) % 2 == 0)
+		cub->curr_spr = (cub->curr_spr + 1) % 10;
+	mlx_put_image_to_window(cub->mlx->mlx_ptr,
+		cub->mlx->win_ptr, cub->mlx->img_ptr, 0, 0);
+	return (0);
 }

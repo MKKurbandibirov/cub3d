@@ -6,12 +6,11 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 12:26:41 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:20:02 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:07:05 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
-#include <strings.h>
 
 void	size_computation(t_cub *cub, int i)
 {
@@ -33,12 +32,38 @@ void	size_computation(t_cub *cub, int i)
 		cub->sprite[i]->draw_end_x = WIN_WIDTH - 1;
 }
 
-void	drawing(t_cub *cub, int i)
+void	draw_sprite_stripe(t_cub *cub, int i, int stripe)
 {
-	int	stripe;
 	int	y;
 	int	d;
 	int	color;
+
+	if (cub->sprite[i]->transform_y > 0 && stripe > 0 && stripe < WIN_WIDTH
+		&& cub->sprite[i]->transform_y < cub->sprite[i]->z_buff[stripe])
+	{
+		y = cub->sprite[i]->draw_start_y;
+		while (y < cub->sprite[i]->draw_end_y)
+		{
+			d = y * 256 - WIN_HEIGHT * 128
+				+ cub->sprite[i]->sprite_height * 128;
+			cub->sprite[i]->tex_y = (d * cub->sprite[i]->height
+					/ cub->sprite[i]->sprite_height) / 256;
+			color = (0 | ((uint16_t)cub->sprite[i]->addr[cub->sprite[i]->tex_y
+						* cub->sprite[i]->line_length + cub->sprite[i]->tex_x
+						* cub->sprite[i]->bits_per_pixel / 8 + 1]) << 8
+					| (uint16_t)cub->sprite[i]->addr[cub->sprite[i]->tex_y
+					* cub->sprite[i]->line_length + cub->sprite[i]->tex_x
+					* cub->sprite[i]->bits_per_pixel / 8 + 2]);
+			if (color != 0x00FFFFFF)
+				my_put_pixel(cub, stripe, y, color);
+			y++;
+		}
+	}
+}
+
+void	drawing(t_cub *cub, int i)
+{
+	int	stripe;
 
 	stripe = cub->sprite[i]->draw_start_x;
 	while (stripe < cub->sprite[i]->draw_end_x)
@@ -47,25 +72,7 @@ void	drawing(t_cub *cub, int i)
 					- (-cub->sprite[i]->sprite_width / 2
 						+ cub->sprite[i]->sprite_screen_x))
 				* cub->sprite[i]->height / cub->sprite[i]->sprite_width) / 256;
-		if (cub->sprite[i]->transform_y > 0 && stripe > 0 && stripe < WIN_WIDTH
-			&& cub->sprite[i]->transform_y < cub->sprite[i]->z_buff[stripe])
-		{
-			y = cub->sprite[i]->draw_start_y;
-			while (y < cub->sprite[i]->draw_end_y)
-			{
-				d = y * 256 - WIN_HEIGHT * 128
-					+ cub->sprite[i]->sprite_height * 128;
-				cub->sprite[i]->tex_y = (d * cub->sprite[i]->height
-						/ cub->sprite[i]->sprite_height) / 256;
-				color = (((uint16_t)cub->sprite[i]->addr[cub->sprite[i]->tex_y * cub->sprite[i]->line_length
-							+ cub->sprite[i]->tex_x * cub->sprite[i]->bits_per_pixel / 8 + 1]) << 8
-						| (uint16_t)cub->sprite[i]->addr[cub->sprite[i]->tex_y * cub->sprite[i]->line_length
-						+ cub->sprite[i]->tex_x * cub->sprite[i]->bits_per_pixel / 8 + 2]);
-				if (color != 0x00FFFFFF)
-					my_put_pixel(cub, stripe, y, color);
-				y++;
-			}
-		}
+		draw_sprite_stripe(cub, i, stripe);
 		stripe++;
 	}
 }

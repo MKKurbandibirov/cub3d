@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 13:16:07 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/15 13:42:23 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:47:50 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	door_open(t_cub *cub, int keycode)
 		{
 			diff_x = abs((int)cub->person->pos_x - cub->doors_pos[i][0]);
 			diff_y = abs((int)cub->person->pos_y - cub->doors_pos[i][1]);
-			if (diff_x <= 2 && diff_y <= 2 && cub->map[cub->doors_pos[i][0]][cub->doors_pos[i][1]] != '0')
+			if (diff_x <= 2 && diff_y <= 2
+				&& cub->map[cub->doors_pos[i][0]][cub->doors_pos[i][1]] != '0')
 			{
 				cub->map[cub->doors_pos[i][0]][cub->doors_pos[i][1]] = '0';
 				return (1);
@@ -49,7 +50,8 @@ int	door_close(t_cub *cub, int keycode)
 		{
 			diff_x = abs((int)cub->person->pos_x - cub->doors_pos[i][0]);
 			diff_y = abs((int)cub->person->pos_y - cub->doors_pos[i][1]);
-			if (diff_x <= 2 && diff_y <= 2 && cub->map[cub->doors_pos[i][0]][cub->doors_pos[i][1]] == '0')
+			if (diff_x <= 2 && diff_y <= 2
+				&& cub->map[cub->doors_pos[i][0]][cub->doors_pos[i][1]] == '0')
 			{
 				cub->map[cub->doors_pos[i][0]][cub->doors_pos[i][1]] = DOOR;
 				return (1);

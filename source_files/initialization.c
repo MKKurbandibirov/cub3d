@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:26:17 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/15 13:44:23 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:43:35 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	**get_map(int length, int width)
 	char	**map;
 	int		i;
 
-	map = (char **)malloc(sizeof(char *) * length);
+	map = (char **)malloc(sizeof(char *) * (length + 1));
 	if (map == NULL)
 		return (NULL);
 	i = 0;
@@ -55,11 +55,12 @@ static char	**get_map(int length, int width)
 		map[i] = (char *)malloc(sizeof(char) * width);
 		if (map[i] == NULL)
 		{
-			map_free(map, i);
+			free_split(map);
 			return (NULL);
 		}
 		i++;
 	}
+	map[i] = NULL;
 	return (map);
 }
 
@@ -87,7 +88,7 @@ t_sprite	**set_sprites(t_cub *cub)
 
 // int	**door_pos_init()
 
-t_cub	*cub_init(char *map_path)
+t_cub	*cub_init(void)
 {
 	t_cub	*cub;
 
@@ -101,7 +102,6 @@ t_cub	*cub_init(char *map_path)
 	cub->map = get_map(cub->map_height, cub->map_width);
 	if (cub->map == NULL)
 		return (NULL);
-	cub->map_path = map_path;
 	fill_map(cub); /*Change after parsing*/
 	cub->mlx = t_mlx_init();
 	if (cub->mlx == NULL)
@@ -109,10 +109,11 @@ t_cub	*cub_init(char *map_path)
 	cub->rays = (t_rays *)malloc(sizeof(t_rays));
 	if (cub->rays == NULL)
 		return (NULL);
+	cub->sprite = NULL;
 	cub->sprite = set_sprites(cub);
 	if (cub->sprite == NULL)
 		return (NULL);
-	cub->person = person_init();
+	cub->person = person_init(EAST);
 	if (set_textures(cub) == NULL || cub->person == NULL)
 		return (NULL);
 	/* Change after parsing */

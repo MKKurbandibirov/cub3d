@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 14:30:29 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/15 12:54:41 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:50:20 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,6 @@ t_mlx	*t_mlx_init(void)
 	if (mlx->addr == NULL)
 		return (NULL);
 	return (mlx);
-}
-
-t_person	*person_init(void)
-{
-	t_person	*person;
-
-	person = (t_person *)malloc(sizeof(t_person));
-	if (person == NULL)
-		return (NULL);
-	/*Change after parsing*/
-	person->pos_x = 25;
-	person->pos_y = 25;
-	person->dir_x = -1;
-	person->dir_y = 0;
-	person->plane_x = 0;
-	person->plane_y = 0.66;
-	person->mouse_x = 0;
-	return (person);
 }
 
 t_sprite	*sprite_init(char *path, t_cub *cub)

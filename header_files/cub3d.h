@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:39:53 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/15 13:25:40 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:30 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CUB3D_H
 
 # include <time.h>
-
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -103,11 +102,11 @@ typedef struct s_sprite
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	char	*path;
+	char	*path;  /*Change after parsing*/
 	int		height;
 	int		width;
-	int		pos_x;
-	int		pos_y;
+	int		pos_x; /*Change after parsing*/
+	int		pos_y; /*Change after parsing*/
 	double	sprite_x;
 	double	sprite_y;
 	double	transform_x;
@@ -137,12 +136,11 @@ typedef struct s_mlx
 
 typedef struct s_cub
 {
-	time_t 		start;
+	time_t		start;
 	time_t		end;
 	int			map_height;
 	int			map_width;
-	char		**map;
-	char		*map_path;
+	char		**map; /*Change after parsing*/
 	t_mlx		*mlx;
 	t_rays		*rays;
 	t_person	*person;
@@ -151,15 +149,15 @@ typedef struct s_cub
 	t_texture	*we_tex;
 	t_texture	*ea_tex;
 	t_texture	*door;
-	int			**doors_pos;
 	t_sprite	**sprite;
 	int			curr_spr;
+	int			**doors_pos; /*Change after parsing*/
 }	t_cub;
 
 /*---------------- Initialization ----------------*/
-t_cub		*cub_init(char *map_path);
+t_cub		*cub_init(void);
 void		*set_textures(t_cub *cub);
-t_person	*person_init(void);
+t_person	*person_init(int dir);
 t_mlx		*t_mlx_init(void);
 t_texture	*texture_init(char *path, t_mlx *mlx);
 t_sprite	*sprite_init(char *path, t_cub *cub);
@@ -170,8 +168,10 @@ void		cub_destroy(t_cub *cub);
 
 /*-------------------- Utils ---------------------*/
 void		print_err(char *str);
-void		print_map(t_cub *cub);
 void		my_put_pixel(t_cub *cub, int x, int y, int color);
+int			rendering(t_cub *cub);
+int			on_destroy(t_cub *cub);
+int			hooking(int keycode, t_cub *cub);
 
 /*------------------ Raycasting ------------------*/
 void		raycasting(t_cub *cub, int i);
@@ -179,15 +179,17 @@ void		tex_computation(t_cub *cub);
 void		dda_computation(t_cub *cub);
 void		distance_computation(t_cub *cub);
 void		direction_computation(t_cub *cub, int x);
+void		draw(t_cub *cub, t_texture *tex, int x);
 
-/*--------------- Moving/Rotating -----------------*/
+/*--------------- Moving/Rotating ----------------*/
 void		moving(t_cub *cub, int keycode);
 void		rotating(t_cub *cub, int keycode);
 int			mouse_rotate(int x, int y, t_cub *cub);
 
+/*------------------- Sprites --------------------*/
 void		draw_sprite(t_cub *cub, int i);
-void		my_put_spixel(t_sprite *spr, int x, int y, int color);
 
+/*-------------------- Doors ---------------------*/
 int			door_open(t_cub *cub, int keycode);
 int			door_close(t_cub *cub, int keycode);
 
