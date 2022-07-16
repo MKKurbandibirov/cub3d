@@ -47,6 +47,11 @@ int	hooking(int keycode, t_cub *cub)
 {
 	if (keycode == EXIT_KEY)
 		on_destroy(cub);
+	if (keycode == PRINT_CRD)
+	{
+		printf("%f\t", cub->person->pos_x);
+		printf("%f\n", cub->person->pos_y);
+	}
 	moving(cub, keycode);
 	rotating(cub, keycode);
 	if (!door_open(cub, keycode))
@@ -63,6 +68,7 @@ int	rendering(t_cub *cub)
 	draw_sprite(cub, cub->curr_spr);
 	if ((cub->start - cub->end) % 4 == 0)
 		cub->curr_spr = (cub->curr_spr + 1) % cub->cnt_texture_sp;
+	draw_minimap(cub, -10, -10);
 	mlx_put_image_to_window(cub->mlx->mlx_ptr,
 		cub->mlx->win_ptr, cub->mlx->img_ptr, 0, 0);
 	return (0);

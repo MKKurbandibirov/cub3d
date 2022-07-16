@@ -22,6 +22,9 @@
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 
+# define SCALE 10
+# define PRINT_CRD 35
+
 # define WIN_HEIGHT 1200
 # define WIN_WIDTH 1800
 
@@ -155,6 +158,8 @@ typedef struct s_cub
 	int			clr_f;
 	int			user_pos_x;
 	int			user_pos_y;
+	int			default_x;
+	int			default_y;
 	int			direction;
 	int			clr_c;
 	int			cnt_texture_sp;
@@ -162,6 +167,7 @@ typedef struct s_cub
 	int			sprite_pos_y;
 	int			curr_spr;
 	int			cnt_door;
+	int			str_in_map;
 	int			**doors_pos;
 }	t_cub;
 
@@ -205,5 +211,9 @@ void		draw_sprite(t_cub *cub, int i);
 /*-------------------- Doors ---------------------*/
 int			door_open(t_cub *cub, int keycode);
 int			door_close(t_cub *cub, int keycode);
+
+
+
+void	draw_minimap(t_cub *cub, int i, int j);
 
 #endif

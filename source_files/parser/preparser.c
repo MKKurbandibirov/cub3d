@@ -34,7 +34,10 @@ void	ft_alloc(t_prs *prs, int i)
 		while (i < prs->texture->cnt_lst)
 		{
 			prs->cub->sprite_texture[i++] = ft_strdup(prs->texture->lst->data);
-			ft_delelem_sp(&prs->texture->lst, prs->texture->lst);
+			if (i == prs->texture->cnt_lst)
+				break ;
+			// ft_delelem_sp(&prs->texture->lst, prs->texture->lst);
+			prs->texture->lst = prs->texture->lst->next;
 		}
 		prs->cub->sprite_texture[i] = NULL;
 	}
@@ -119,6 +122,11 @@ void	ft_preparser(t_prs *prs, char *path)
 		ft_horizontal_checking(prs);
 		ft_alloc(prs, 0);
 		ft_broadcast_settings(prs, 0);
+		prs->cub->str_in_map = prs->cnt_str_in_map;
+		while (prs->texture->lst->prev)
+			prs->texture->lst = prs->texture->lst->prev;
+		while (prs->texture->lst)
+			ft_delelem_sp(&prs->texture->lst, prs->texture->lst);
 	}
 	else
 	{

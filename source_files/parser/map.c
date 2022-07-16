@@ -27,10 +27,12 @@ void	ft_horizontal_checking(t_prs *prs)
 			start++;
 		while (prs->map[i][end] == ' ')
 			end--;
-		if (end <= 1 || prs->map[i][end] != '1' || prs->map[i][start] != '1')
+		if (end == 0)
+			return ;
+		if (prs->map[i][end] != '1' || prs->map[i][start] != '1')
 		{
 			ft_strerr("[ERROR] Invalid .cub file\n");
-			ft_prs_exit(prs, 1);
+			ft_prs_exit(prs, 0);
 		}
 		i++;
 	}

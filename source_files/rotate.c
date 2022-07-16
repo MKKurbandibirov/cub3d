@@ -57,6 +57,8 @@ void	rotating(t_cub *cub, int keycode)
 int	mouse_rotate(int x, int y, t_cub *cub)
 {
 	(void)y;
+	if (x >= 2459 || x <= -99)
+		mlx_mouse_move(cub->mlx->win_ptr, WIN_HEIGHT / 2, WIN_WIDTH / 2);
 	if (abs(x - cub->person->mouse_x) > 5)
 	{
 		if (x - cub->person->mouse_x > 0)

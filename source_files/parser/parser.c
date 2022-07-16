@@ -27,7 +27,7 @@ static void	ft_init_prs(t_prs *prs, t_cub *cub)
 	prs->cub = cub;
 	prs->preprs = NULL;
 	prs->map = NULL;
-	prs->texture = (t_texture_prs *) malloc(sizeof(t_texture_prs) * 1);
+	prs->texture = (t_texture_prs *) malloc(sizeof(t_texture_prs));
 	if (prs->texture == NULL)
 		ft_free_allocated_err(prs, 0);
 	prs->texture->lst = NULL;
@@ -73,14 +73,16 @@ void	ft_prs_exit(t_prs *prs, int key)
 
 void	ft_parser(char *path, t_cub *cub)
 {
-	t_prs	prs;
+	t_prs	*prs;
 
-	if (ft_validatede_path(path) || ft_access(path))
+	prs = (t_prs *)malloc(sizeof(t_prs));
+	if (prs == NULL || ft_validatede_path(path) || ft_access(path))
 	{
 		free(cub);
 		exit(EXIT_FAILURE);
 	}
-	ft_init_prs(&prs, cub);
-	ft_preparser(&prs, path);
-	free(prs.strlen);
+	ft_init_prs(prs, cub);
+	ft_preparser(prs, path);
+	free(prs->strlen);
+	free(prs);
 }
