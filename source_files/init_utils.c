@@ -78,20 +78,20 @@ t_sprite	*sprite_init(char *path, t_cub *cub)
 
 void	*set_textures(t_cub *cub)
 {
-	/* Change after parsing */
-	cub->no_tex = texture_init("textures/no_wall.xpm", cub->mlx);
+	cub->no_tex = texture_init(cub->wall_texture_path[0], cub->mlx);
 	if (cub->no_tex == NULL)
 		return (NULL);
-	cub->so_tex = texture_init("textures/so_wall.xpm", cub->mlx);
+	cub->so_tex = texture_init(cub->wall_texture_path[1], cub->mlx);
 	if (cub->so_tex == NULL)
 		return (NULL);
-	cub->we_tex = texture_init("textures/we_wall.xpm", cub->mlx);
-	if (cub->we_tex == NULL)
-		return (NULL);
-	cub->ea_tex = texture_init("textures/ea_wall.xpm", cub->mlx);
+	cub->ea_tex = texture_init(cub->wall_texture_path[2], cub->mlx);
 	if (cub->ea_tex == NULL)
 		return (NULL);
-	cub->door = texture_init("textures/door.xpm", cub->mlx);
+	cub->we_tex = texture_init(cub->wall_texture_path[3], cub->mlx);
+	if (cub->we_tex == NULL)
+		return (NULL);
+	if (cub->cnt_door > 0)
+	cub->door = texture_init(cub->wall_texture_path[4], cub->mlx);
 	if (cub->door == NULL)
 		return (NULL);
 	return (cub);

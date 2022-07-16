@@ -151,11 +151,16 @@ typedef struct s_cub
 	t_texture	*door;
 	t_sprite	**sprite;
 	char		**sprite_texture;
+	char		**wall_texture_path;
+	int			clr_f;
+	int			direction;
+	int			clr_c;
 	int			cnt_texture_sp;
 	int			sprite_pos_x;
 	int			sprite_pos_y;
 	int			curr_spr;
-	int			**doors_pos; /*Change after parsing*/
+	int			cnt_door;
+	int			**doors_pos;
 }	t_cub;
 
 # include "parser.h"

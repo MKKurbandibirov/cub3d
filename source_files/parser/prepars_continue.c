@@ -16,18 +16,27 @@ int	ft_status(char *s)
 {
 	if (!s || !*s)
 		return (-1);
-	if (s[0] && s[1] && s[2] && s[2] == ' ' && s[0] == 'N' && s[1] == 'O')
+	if (s[0] && s[1] && s[2] && (s[2] == ' ' || s[2] == '\t')
+		&& s[0] == 'N' && s[1] == 'O')
 		return (0);
-	else if (s[0] && s[1] && s[2] && s[2] == ' ' && s[0] == 'S' && s[1] == 'O')
+	else if (s[0] && s[1] && s[2] && (s[2] == ' ' || s[2] == '\t')
+		&& s[0] == 'S' && s[1] == 'O')
 		return (1);
-	else if (s[0] && s[1] && s[2] && s[2] == ' ' && s[0] == 'E' && s[1] == 'A')
+	else if (s[0] && s[1] && s[2] && (s[2] == ' ' || s[2] == '\t')
+		&& s[0] == 'E' && s[1] == 'A')
 		return (2);
-	else if (s[0] && s[1] && s[2] && s[2] == ' ' && s[0] == 'W' && s[1] == 'E')
+	else if (s[0] && s[1] && s[2] && (s[2] == ' ' || s[2] == '\t')
+		&& s[0] == 'W' && s[1] == 'E')
 		return (3);
 	else if (s[0] && s[1] && s[0] == 'C' && (s[1] == ' ' || s[1] == '\t'))
 		return (4);
 	else if (s[0] && s[1] && s[0] == 'F' && (s[1] == ' ' || s[1] == '\t'))
 		return (5);
+	else if (s[0] && s[1] && s[0] == 'D' && (s[1] == ' ' || s[1] == '\t'))
+		return (6);
+	else if (s[0] && s[1] && s[2] && (s[2] == ' ' || s[2] == '\t')
+		&& s[0] == 'S' && s[1] == 'P')
+		return (7);
 	return (-1);
 }
 
@@ -60,6 +69,45 @@ char	*ft_curr_word(char *s, int i, int cnt, char prev_c)
 	return (curr);
 }
 
+void	ft_pushback_sp(t_plist **head, char *line, t_prs *prs)
+{
+	t_plist	*tmp;
+	t_plist	*last;
+
+	last = ft_getlast(*head);
+	tmp = (t_plist *) malloc(sizeof(t_plist));
+	if (!tmp)
+		return ;
+	tmp->data = line;
+	prs->texture->cnt_lst += 1;
+	tmp->id = prs->texture->cnt_lst;
+	tmp->next = NULL;
+	if (!last)
+	{
+		*head = tmp;
+		(*head)->prev = NULL;
+	}
+	else
+	{
+		last->next = tmp;
+		tmp->prev = last;
+	}
+}
+
+
+int	ft_fill_path(t_prs **prs, int status, char *s)
+{
+	if (status < 7)
+	{
+		(*prs)->texture->massiv[status] = ft_curr_word(s, 0, 0, '0');
+		(*prs)->texture->check_cnt += 1;
+	}
+	else
+		ft_pushback_sp(&(*prs)->texture->lst,
+			ft_curr_word(s, 0, 0, '0'), *prs);
+	return (0);
+}
+
 int	ft_search_settings(char	*s, t_prs **prs, int i, int status)
 {
 	if (!s)
@@ -76,12 +124,8 @@ int	ft_search_settings(char	*s, t_prs **prs, int i, int status)
 			i += ft_skip_space(&s[i]);
 			if (!s[i] || s[i] == '\n')
 				return (-2);
-			if ((*prs)->texture->massiv[status] == NULL)
-			{
-				(*prs)->texture->massiv[status] = ft_curr_word(&s[i], 0, 0, '0');
-				(*prs)->texture->check_cnt += 1;
-				return (0);
-			}
+			if (status == 7 || (*prs)->texture->massiv[status] == NULL)
+				return (ft_fill_path(prs, status, &s[i]));
 			else
 				exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
 			i++;
@@ -95,7 +139,7 @@ void	ft_get_path(t_prs *prs)
 	t_plist	*curr;
 
 	curr = prs->preprs;
-	while (curr && prs->texture->check_cnt != 6)
+	while (curr && !ft_is_map(curr->data))
 	{
 		ft_search_settings(curr->data, &prs, 0, 0);
 		ft_delelem(&prs->preprs, prs->preprs, prs);

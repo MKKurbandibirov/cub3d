@@ -1,9 +1,28 @@
+SP	./textures/1.xpm
 C 																		225,30,0
+
+
+
+
+
 F						 220,100,0
-					NO 					./path_to_the_north_texture\ asdasdsad
-						SO path_to_the_south_texture
-								WE 									WE								./path_to_the_west_texture
-													EA 																					./path_to_the_east_texture
+					NO 				./textures/ea_wall.xpm	
+						SO ./textures/no_wall.xpm 
+								WE 						./textures/so_wall.xpm	
+													EA 				./textures/we_wall.xpm	
+
+
+D ./textures/door.xpm
+
+
+SP	./textures/2.xpm
+SP	./textures/3.xpm
+SP	./textures/4.xpm
+SP	./textures/5.xpm
+SP	./textures/6.xpm
+SP	./textures/7.xpm
+SP	./textures/8.xpm
+SP	./textures/9.xpm
 
 
 
@@ -16,7 +35,7 @@ F						 220,100,0
 11110111111111011100000010001
 1111D111111111011101010010001
 11000000110101011100000010001
-10000000001000001100000010001
+1000Y000001000001100000010001
 10000000000000001101010010001
 11000001110101011111011110N01
 11110111 1110101 101111010001

@@ -19,7 +19,7 @@
 typedef struct s_plist	t_plist;
 typedef struct s_texture_prs
 {
-	char		*massiv[6];
+	char		*massiv[7];
 	char		**sprite;
 	t_plist		*lst;
 	int			cnt_lst;

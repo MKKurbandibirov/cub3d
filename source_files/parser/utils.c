@@ -38,7 +38,8 @@ int	ft_search_parties(char *s)
 		return (0);
 	if (ft_strnstr(s, "NO", ft_strlen(s)) || ft_strnstr(s, "SO", ft_strlen(s))
 		|| ft_strnstr(s, "EA", ft_strlen(s)) || ft_strchr(s, 'C')
-		|| ft_strnstr(s, "WE", ft_strlen(s)) || ft_strchr(s, 'F'))
+		|| ft_strnstr(s, "WE", ft_strlen(s)) || ft_strchr(s, 'F')
+		|| ft_strchr(s, 'D') || ft_strnstr(s, "SP", ft_strlen(s)))
 		return (1);
 	return (0);
 }

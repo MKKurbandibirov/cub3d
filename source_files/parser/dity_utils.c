@@ -31,7 +31,17 @@ int	ft_dirty_strlen(char *s, int i, t_prs *prs)
 	while (s[i])
 	{
 		if (s[i] == 'N' || s[i] == 'S' || s[i] == 'W' || s[i] == 'E')
+		{
 			prs->cnt_ewns++;
+			if (prs->cnt_ewns <= 1 && s[i] == 'N')
+				prs->cub->direction = NORTH;
+			else if (prs->cnt_ewns < 1 && s[i] == 'S')
+				prs->cub->direction = SOUTH;
+			else if (prs->cnt_ewns < 1 && s[i] == 'W')
+				prs->cub->direction = WEST;
+			else if (prs->cnt_ewns < 1 && s[i] == 'E')
+				prs->cub->direction = EAST;
+		}
 		else if (s[i] == 'D')
 			prs->cnt_doors++;
 		else if (s[i] == 'Y')

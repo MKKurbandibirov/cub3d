@@ -63,5 +63,5 @@ void	draw(t_cub *cub, t_texture *tex, int x)
 				+ cub->rays->tex_x * tex->bits_per_pixel / 8 + 2]));
 		y++;
 	}
-	draw_floor_ceil(cub, x, 0x0095A7C0, 0x005D814E); /* Change after parsing */
+	draw_floor_ceil(cub, x, cub->clr_c, cub->clr_f);
 }

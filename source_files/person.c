@@ -51,9 +51,6 @@ t_person	*person_init(int dir)
 	person = (t_person *)malloc(sizeof(t_person));
 	if (person == NULL)
 		return (NULL);
-	/*Change after parsing*/
-	person->pos_x = 25;
-	person->pos_y = 25;
 	if (dir == WEST)
 		west_direction(person);
 	else if (dir == EAST)
