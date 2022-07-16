@@ -65,13 +65,15 @@ void	ft_coord(t_prs *prs, int i, int j)
 			if (prs->map[i][j] == 'N' || prs->map[i][j] == 'S'
 				|| prs->map[i][j] == 'W' || prs->map[i][j] == 'E')
 			{
-				prs->cub->person->pos_x = i;
-				prs->cub->person->pos_y = j;
+				prs->cub->user_pos_x = i;
+				prs->cub->user_pos_y = j;
+				prs->map[i][j] = '0';
 			}
 			else if (prs->map[i][j] == 'Y')
 			{
 				prs->cub->sprite_pos_x = i;
 				prs->cub->sprite_pos_y = j;
+				prs->map[i][j] = '0';
 			}
 			else if (prs->map[i][j] == 'D')
 			{
@@ -127,11 +129,10 @@ int	ft_get_color(char *s)
 	if (cnt != 3)
 		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
 	color = 0x00000000;
-	color += ft_atoi(splt[0]) * 256 * 256;
-	color += ft_atoi(splt[1]) * 256;
+	color += ft_atoi(splt[0]) << 16;
+	color += ft_atoi(splt[1]) << 8;
 	color += ft_atoi(splt[2]);
 	free_split(splt);
-	printf("%#x\n", color);
 	return (color);
 }
 
@@ -160,7 +161,7 @@ void	ft_broadcast_settings(t_prs *prs)
 	else
 		prs->cub->wall_texture_path[4] = NULL;
 	prs->cub->clr_c = ft_get_color(prs->texture->massiv[4]);
-	prs->cub->clr_c = ft_get_color(prs->texture->massiv[5]);
+	prs->cub->clr_f = ft_get_color(prs->texture->massiv[5]);
 }
 
 void	ft_preparser(t_prs *prs, char *path)

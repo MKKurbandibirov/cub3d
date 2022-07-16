@@ -19,6 +19,11 @@ static void	ft_init_prs(t_prs *prs, t_cub *cub)
 	i = 0;
 	prs->len_lists = 0;
 	prs->cnt_ewns = 0;
+	prs->cnt_doors = 0;
+	prs->curr_door = 0;
+	prs->cnt_yoda = 0;
+	prs->cnt_str_in_map = 0;
+	prs->max_len_str = 0;
 	prs->texture = (t_texture_prs *) malloc(sizeof(t_texture_prs) * 1);
 	if (!prs->texture)
 		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
@@ -48,6 +53,21 @@ static void	ft_validatede_path(char *path)
 	}
 }
 
+void ft_prs_exit(t_prs *prs)
+{
+	if (prs->map)
+		free_split(prs->map);
+	while (prs->preprs != NULL)
+		ft_delelem(&prs->preprs, prs->preprs, prs);
+	free_split(prs->cub->sprite_texture);
+	free_split(prs->cub->wall_texture_path);
+	while (prs->cnt_doors)
+		free(prs->cub->doors_pos[--prs->cnt_doors]);
+	free(prs->cub->doors_pos);
+	free(prs->strlen);
+	free(prs->cub);
+}
+
 void	ft_parser(char *path, t_cub *cub)
 {
 	t_prs	prs;
@@ -57,4 +77,6 @@ void	ft_parser(char *path, t_cub *cub)
 		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
 	ft_init_prs(&prs, cub);
 	ft_preparser(&prs, path);
+	ft_prs_exit(&prs);
+	exit(1);
 }

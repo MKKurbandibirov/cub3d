@@ -44,13 +44,15 @@ static void	north_direction(t_person *person)
 	person->plane_y = 0.66;
 }
 
-t_person	*person_init(int dir)
+t_person	*person_init(int dir, int x, int y)
 {
 	t_person	*person;
 
 	person = (t_person *)malloc(sizeof(t_person));
 	if (person == NULL)
 		return (NULL);
+	person->pos_x = x;
+	person->pos_y = y;
 	if (dir == WEST)
 		west_direction(person);
 	else if (dir == EAST)

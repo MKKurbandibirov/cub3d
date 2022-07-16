@@ -140,7 +140,7 @@ typedef struct s_cub
 	time_t		end;
 	int			map_height;
 	int			map_width;
-	char		**map; /*Change after parsing*/
+	char		**map;
 	t_mlx		*mlx;
 	t_rays		*rays;
 	t_person	*person;
@@ -153,6 +153,8 @@ typedef struct s_cub
 	char		**sprite_texture;
 	char		**wall_texture_path;
 	int			clr_f;
+	int			user_pos_x;
+	int			user_pos_y;
 	int			direction;
 	int			clr_c;
 	int			cnt_texture_sp;
@@ -168,7 +170,7 @@ typedef struct s_cub
 /*---------------- Initialization ----------------*/
 t_cub		*cub_init(char *argv);
 void		*set_textures(t_cub *cub);
-t_person	*person_init(int dir);
+t_person	*person_init(int dir, int x, int y);
 t_mlx		*t_mlx_init(void);
 t_texture	*texture_init(char *path, t_mlx *mlx);
 t_sprite	*sprite_init(char *path, t_cub *cub);

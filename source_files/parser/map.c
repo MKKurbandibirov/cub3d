@@ -52,7 +52,10 @@ void	ft_verticatl_checking(t_prs *prs, int start, int end)
 				|| (prs->map[end][i] && prs->map[end][i] == ' ')))
 			end--;
 		if (end == 0)
+		{
 			printf("VERTICAL -- OK\n");
+			return ;
+		}
 		else if (prs->map[end][i] != '1' || prs->map[start][i] != '1')
 		{
 			printf("OPEN CART");

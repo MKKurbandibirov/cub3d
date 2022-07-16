@@ -21,7 +21,7 @@ int	door_open(t_cub *cub, int keycode)
 	i = 0;
 	if (keycode == 49)
 	{
-		while (i < 2) /* Change after parsing */
+		while (i < cub->cnt_door)
 		{
 			diff_x = abs((int)cub->person->pos_x - cub->doors_pos[i][0]);
 			diff_y = abs((int)cub->person->pos_y - cub->doors_pos[i][1]);
@@ -46,7 +46,7 @@ int	door_close(t_cub *cub, int keycode)
 	i = 0;
 	if (keycode == 49)
 	{
-		while (i < 2) /* Change after parsing */
+		while (i < cub->cnt_door)
 		{
 			diff_x = abs((int)cub->person->pos_x - cub->doors_pos[i][0]);
 			diff_y = abs((int)cub->person->pos_y - cub->doors_pos[i][1]);
