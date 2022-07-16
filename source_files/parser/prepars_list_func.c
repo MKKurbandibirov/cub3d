@@ -44,7 +44,7 @@ void	ft_pushback_p(t_plist **head, char *line, t_prs *prs)
 	last = ft_getlast(*head);
 	tmp = (t_plist *) malloc(sizeof(t_plist));
 	if (!tmp)
-		return ;
+		ft_free_allocated_err(prs, 0);
 	tmp->data = line;
 	prs->len_lists += 1;
 	tmp->id = prs->len_lists;

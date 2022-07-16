@@ -77,7 +77,7 @@ void	ft_pushback_sp(t_plist **head, char *line, t_prs *prs)
 	last = ft_getlast(*head);
 	tmp = (t_plist *) malloc(sizeof(t_plist));
 	if (!tmp)
-		return ;
+		ft_free_allocated_err(prs, 0);
 	tmp->data = line;
 	prs->texture->cnt_lst += 1;
 	tmp->id = prs->texture->cnt_lst;
@@ -119,7 +119,7 @@ int	ft_search_settings(char	*s, t_prs **prs, int i, int status)
 			i += ft_skip_space(&s[i]);
 			status = ft_status(&s[i]);
 			if (status == -1)
-				exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+				ft_free_serch_helper(prs);
 			i += 2;
 			i += ft_skip_space(&s[i]);
 			if (!s[i] || s[i] == '\n')
@@ -127,7 +127,7 @@ int	ft_search_settings(char	*s, t_prs **prs, int i, int status)
 			if (status == 7 || (*prs)->texture->massiv[status] == NULL)
 				return (ft_fill_path(prs, status, &s[i]));
 			else
-				exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+				ft_free_serch_helper(prs);
 			i++;
 		}
 	}
@@ -156,7 +156,7 @@ void	ft_create_lists(t_prs **prs, char *path)
 	if (fd < 0)
 	{
 		ft_strerr("Problems reading a file\n");
-		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
+		ft_prs_exit(*prs, 0);
 	}
 	line = get_next_line(fd);
 	while (line)

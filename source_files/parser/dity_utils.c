@@ -56,10 +56,13 @@ int	ft_dirty_strlen(char *s, int i, t_prs *prs)
 void	ft_alloc_map(t_prs *prs)
 {
 	if (prs->preprs == NULL)
-		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	{
+		ft_strerr("[ERROR] Invalid .cub file\n");
+		ft_prs_exit(prs, 0);
+	}
 	prs->map = (char **) malloc(sizeof(char *) * prs->len_lists + 1);
 	if (!prs->map)
-		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+		ft_free_allocated_err(prs, 0);
 }
 
 void	ft_skip_endl(t_prs *prs)

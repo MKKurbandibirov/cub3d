@@ -31,12 +31,12 @@ void	ft_alloc(t_prs *prs, int i)
 
 	prs->cub->doors_pos = (int **)malloc(sizeof(int *) * prs->cnt_doors);
 	if (prs->cub->doors_pos == NULL)
-		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+		ft_free_allocated_err(prs, 1);
 	while (i < prs->cnt_doors)
 	{
 		prs->cub->doors_pos[i] = (int *)malloc(sizeof(int) * 2);
 		if (prs->cub->doors_pos[i] == NULL)
-			exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+			ft_free_allocated_err(prs, 1);
 		i++;
 	}
 	if (prs->texture->cnt_lst != 0)
@@ -45,7 +45,7 @@ void	ft_alloc(t_prs *prs, int i)
 		prs->cub->sprite_texture = (char **)malloc(sizeof(char *)
 				* prs->texture->cnt_lst + 1);
 		if (prs->cub->sprite_texture == NULL)
-			exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+			ft_free_allocated_err(prs, 1);
 		while (i < prs->texture->cnt_lst)
 		{
 			prs->cub->sprite_texture[i++] = ft_strdup(prs->texture->lst->data);
@@ -57,10 +57,10 @@ void	ft_alloc(t_prs *prs, int i)
 
 void	ft_coord(t_prs *prs, int i, int j)
 {
-	while (prs->map[i])
+	while (prs->map[++i])
 	{
-		j = 0;
-		while (prs->map[i][j])
+		j = -1;
+		while (prs->map[i][++j])
 		{
 			if (prs->map[i][j] == 'N' || prs->map[i][j] == 'S'
 				|| prs->map[i][j] == 'W' || prs->map[i][j] == 'E')
@@ -80,18 +80,17 @@ void	ft_coord(t_prs *prs, int i, int j)
 				prs->cub->doors_pos[prs->curr_door][0] = i;
 				prs->cub->doors_pos[prs->curr_door++][1] = j;
 			}
-			j++;
 		}
-		i++;
 	}
 }
 
 void	ft_valid_cnt(t_prs *prs)
 {
-	if (prs->cnt_ewns != 1)
-		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
-	if (prs->cnt_yoda > 1)
-		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	if (prs->cnt_ewns != 1 || prs->cnt_yoda > 1)
+	{
+		ft_strerr("[ERROR] Invalid .cub file\n");
+		ft_prs_exit(prs, 1);
+	}
 }
 
 void	ft_get_map(t_prs *prs, int i)
@@ -107,16 +106,21 @@ void	ft_get_map(t_prs *prs, int i)
 		curr = curr->next;
 	}
 	if (curr != NULL)
-		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	{
+		ft_strerr("[ERROR] Invalid .cub file\n");
+		ft_prs_exit(prs, 0);
+	}
 	prs->map[i] = NULL;
 	prs->cnt_str_in_map = i - 1;
 	prs->strlen = (int *)malloc(sizeof(int) * prs->cnt_str_in_map);
+	if (prs->strlen == NULL)
+		ft_free_allocated_err(prs, 0);
 	i = -1;
 	while (prs->map[++i])
 			prs->strlen[i] = ft_dirty_strlen(prs->map[i], 0, prs);
 }
 
-int	ft_get_color(char *s)
+int	ft_get_color(char *s, t_prs *prs)
 {
 	int		color;
 	int		cnt;
@@ -127,7 +131,10 @@ int	ft_get_color(char *s)
 	while (splt[cnt])
 		cnt++;
 	if (cnt != 3)
-		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+	{
+		ft_strerr("[ERROR] Invalid .cub file\n");
+		ft_prs_exit(prs, 1);
+	}
 	color = 0x00000000;
 	color += ft_atoi(splt[0]) << 16;
 	color += ft_atoi(splt[1]) << 8;
@@ -140,7 +147,7 @@ void	ft_broadcast_settings(t_prs *prs)
 {
 	int	i;
 
-	ft_coord(prs, 0, 0);
+	ft_coord(prs, -1, -1);
 	prs->cub->cnt_door = prs->cnt_doors;
 	prs->cub->map = prs->map;
 	prs->cub->cnt_texture_sp = prs->texture->cnt_lst;
@@ -149,7 +156,7 @@ void	ft_broadcast_settings(t_prs *prs)
 	else
 		prs->cub->wall_texture_path = (char **)malloc(sizeof(char *) * 5);
 	if (prs->cub->wall_texture_path == NULL)
-		exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+		ft_free_allocated_err(prs, 1);
 	i = -1;
 	while (++i < 4)
 		prs->cub->wall_texture_path[i] = ft_strdup(prs->texture->massiv[i]);
@@ -160,8 +167,8 @@ void	ft_broadcast_settings(t_prs *prs)
 	}
 	else
 		prs->cub->wall_texture_path[4] = NULL;
-	prs->cub->clr_c = ft_get_color(prs->texture->massiv[4]);
-	prs->cub->clr_f = ft_get_color(prs->texture->massiv[5]);
+	prs->cub->clr_c = ft_get_color(prs->texture->massiv[4], prs);
+	prs->cub->clr_f = ft_get_color(prs->texture->massiv[5], prs);
 }
 
 void	ft_preparser(t_prs *prs, char *path)
@@ -180,5 +187,8 @@ void	ft_preparser(t_prs *prs, char *path)
 		ft_broadcast_settings(prs);
 	}
 	else
-		printf("КРАТА ГОВНО");
+	{
+		ft_strerr("[ERROR] Invalid .cub file\n");
+		ft_prs_exit(prs, 0);
+	}
 }

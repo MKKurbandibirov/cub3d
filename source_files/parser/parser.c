@@ -24,20 +24,20 @@ static void	ft_init_prs(t_prs *prs, t_cub *cub)
 	prs->cnt_yoda = 0;
 	prs->cnt_str_in_map = 0;
 	prs->max_len_str = 0;
-	prs->texture = (t_texture_prs *) malloc(sizeof(t_texture_prs) * 1);
-	if (!prs->texture)
-		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
-	while (i < 7)
-		prs->texture->massiv[i++] = NULL;
-	prs->texture->cnt_lst = 0;
-	prs->texture->lst = NULL;
-	prs->texture->check_cnt = 0;
 	prs->cub = cub;
 	prs->preprs = NULL;
 	prs->map = NULL;
+	prs->texture = (t_texture_prs *) malloc(sizeof(t_texture_prs) * 1);
+	if (prs->texture == NULL)
+		ft_free_allocated_err(prs, 0);
+	prs->texture->lst = NULL;
+	prs->texture->check_cnt = 0;
+	prs->texture->cnt_lst = 0;
+	while (i < 7)
+		prs->texture->massiv[i++] = NULL;
 }
 
-static void	ft_validatede_path(char *path)
+static int	ft_validatede_path(char *path)
 {
 	char	*skip;
 	char	*name;
@@ -49,11 +49,12 @@ static void	ft_validatede_path(char *path)
 	if (name == NULL || name == skip || name[4] != '\0')
 	{
 		ft_strerr("Incorrect map name\n");
-		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
+		return (1);
 	}
+	return (0);
 }
 
-void ft_prs_exit(t_prs *prs)
+void	ft_prs_exit(t_prs *prs, int key)
 {
 	if (prs->map)
 		free_split(prs->map);
@@ -64,19 +65,22 @@ void ft_prs_exit(t_prs *prs)
 	while (prs->cnt_doors)
 		free(prs->cub->doors_pos[--prs->cnt_doors]);
 	free(prs->cub->doors_pos);
-	free(prs->strlen);
+	if (key > 0)
+		free(prs->strlen);
 	free(prs->cub);
+	exit(EXIT_FAILURE);
 }
 
 void	ft_parser(char *path, t_cub *cub)
 {
 	t_prs	prs;
 
-	ft_validatede_path(path);
-	if (ft_access(path))
-		exit(EXIT_FAILURE); //TODO СДЕЛАТЬ НОРМАЛЬНЫЙ ВЫХОД С ОЧИСТКОЙ ПАМЯТИ
+	if (ft_validatede_path(path) || ft_access(path))
+	{
+		free(cub);
+		exit(EXIT_FAILURE);
+	}
 	ft_init_prs(&prs, cub);
 	ft_preparser(&prs, path);
-	ft_prs_exit(&prs);
-	exit(1);
+	ft_prs_exit(&prs, 1);
 }

@@ -29,8 +29,8 @@ void	ft_horizontal_checking(t_prs *prs)
 			end--;
 		if (end <= 1 || prs->map[i][end] != '1' || prs->map[i][start] != '1')
 		{
-			printf("OPEN CART");
-			exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+			ft_strerr("[ERROR] Invalid .cub file\n");
+			ft_prs_exit(prs, 1);
 		}
 		i++;
 	}
@@ -52,14 +52,11 @@ void	ft_verticatl_checking(t_prs *prs, int start, int end)
 				|| (prs->map[end][i] && prs->map[end][i] == ' ')))
 			end--;
 		if (end == 0)
-		{
-			printf("VERTICAL -- OK\n");
 			return ;
-		}
 		else if (prs->map[end][i] != '1' || prs->map[start][i] != '1')
 		{
-			printf("OPEN CART");
-			exit(EXIT_FAILURE);//TODO NORM OBRABOTKA + VIVOD ERR
+			ft_strerr("[ERROR] Invalid .cub file\n");
+			ft_prs_exit(prs, 1);
 		}
 		i++;
 	}

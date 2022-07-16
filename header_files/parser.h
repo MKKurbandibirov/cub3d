@@ -87,4 +87,13 @@ int		ft_dirty_strlen(char *s, int i, t_prs *prs);
 void	ft_alloc_map(t_prs *prs);
 void	ft_skip_endl(t_prs *prs);
 
+//utils_1.c
+void	ft_free_serch_helper(t_prs **prs);
+void	ft_free_allocated_err(t_prs *prs, int key);
+
+
+
+
+void ft_prs_exit(t_prs *prs, int key);
+
 #endif
