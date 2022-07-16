@@ -45,7 +45,6 @@ void	cub_destroy(t_cub *cub)
 	free_split(cub->sprite_texture);
 	free_split(cub->map);
 	free_split(cub->wall_texture_path);
-	free_split(cub->map);
 	while (cub->cnt_door)
 		free(cub->doors_pos[--cub->cnt_door]);
 	free(cub->doors_pos);

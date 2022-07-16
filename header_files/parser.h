@@ -55,13 +55,16 @@ typedef struct s_prs
 //prepars_list_func.c
 void	ft_pushback_p(t_plist **head, char *line, t_prs *prs);
 void	ft_delelem(t_plist **head, t_plist *delElem, t_prs *prs);
+void	ft_pushback_sp(t_plist **head, char *line, t_prs *prs);
 t_plist	*ft_getlast(t_plist *head);
+void	ft_delelem_sp(t_plist **head, t_plist *delElem);
 
 //parser.c
 void	ft_parser(char *path, t_cub *cub);
 
 //preparser.c
 void	ft_preparser(t_prs *prs, char *path);
+void	ft_coord(t_prs *prs, int i, int j);
 
 //utils.c
 void	ft_strerr(char *s);
@@ -74,7 +77,6 @@ int		ft_is_map(char *line);
 int		ft_status(char *s);
 char	*ft_curr_word(char *s, int i, int cnt, char prev_c);
 int		ft_search_settings(char	*s, t_prs **prs, int i, int status);
-void	ft_get_path(t_prs *prs);
 void	ft_create_lists(t_prs **prs, char *path);
 
 //map.c
@@ -88,8 +90,10 @@ void	ft_alloc_map(t_prs *prs);
 void	ft_skip_endl(t_prs *prs);
 
 //utils_1.c
+void	ft_get_path(t_prs *prs);
 void	ft_free_serch_helper(t_prs **prs);
 void	ft_free_allocated_err(t_prs *prs, int key);
+void	ft_broadcast_settings(t_prs *prs, int i);
 
 
 

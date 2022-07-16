@@ -69,32 +69,6 @@ char	*ft_curr_word(char *s, int i, int cnt, char prev_c)
 	return (curr);
 }
 
-void	ft_pushback_sp(t_plist **head, char *line, t_prs *prs)
-{
-	t_plist	*tmp;
-	t_plist	*last;
-
-	last = ft_getlast(*head);
-	tmp = (t_plist *) malloc(sizeof(t_plist));
-	if (!tmp)
-		ft_free_allocated_err(prs, 0);
-	tmp->data = line;
-	prs->texture->cnt_lst += 1;
-	tmp->id = prs->texture->cnt_lst;
-	tmp->next = NULL;
-	if (!last)
-	{
-		*head = tmp;
-		(*head)->prev = NULL;
-	}
-	else
-	{
-		last->next = tmp;
-		tmp->prev = last;
-	}
-}
-
-
 int	ft_fill_path(t_prs **prs, int status, char *s)
 {
 	if (status < 7)
@@ -132,19 +106,6 @@ int	ft_search_settings(char	*s, t_prs **prs, int i, int status)
 		}
 	}
 	return (0);
-}
-
-void	ft_get_path(t_prs *prs)
-{
-	t_plist	*curr;
-
-	curr = prs->preprs;
-	while (curr && !ft_is_map(curr->data))
-	{
-		ft_search_settings(curr->data, &prs, 0, 0);
-		ft_delelem(&prs->preprs, prs->preprs, prs);
-		curr = curr->next;
-	}
 }
 
 void	ft_create_lists(t_prs **prs, char *path)

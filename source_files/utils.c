@@ -61,7 +61,7 @@ int	rendering(t_cub *cub)
 	raycasting(cub, cub->curr_spr);
 	cub->end = clock();
 	draw_sprite(cub, cub->curr_spr);
-	if ((cub->start - cub->end) % 5 == 0)
+	if ((cub->start - cub->end) % 4 == 0)
 		cub->curr_spr = (cub->curr_spr + 1) % cub->cnt_texture_sp;
 	mlx_put_image_to_window(cub->mlx->mlx_ptr,
 		cub->mlx->win_ptr, cub->mlx->img_ptr, 0, 0);
