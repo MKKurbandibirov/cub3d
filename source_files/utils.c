@@ -47,10 +47,15 @@ int	hooking(int keycode, t_cub *cub)
 {
 	if (keycode == EXIT_KEY)
 		on_destroy(cub);
-	if (keycode == PRINT_CRD)
+	if (keycode == MOUSE_HIDE && cub->key_mouse_hide == 0)
 	{
-		printf("%f\t", cub->person->pos_x);
-		printf("%f\n", cub->person->pos_y);
+		cub->key_mouse_hide = 1;
+		mlx_mouse_hide();
+	}
+	else if (keycode == MOUSE_HIDE && cub->key_mouse_hide == 1)
+	{
+		cub->key_mouse_hide = 0;
+		mlx_mouse_show();
 	}
 	moving(cub, keycode);
 	rotating(cub, keycode);

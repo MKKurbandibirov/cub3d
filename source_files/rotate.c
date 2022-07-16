@@ -67,6 +67,5 @@ int	mouse_rotate(int x, int y, t_cub *cub)
 			rotate_left(cub);
 		cub->person->mouse_x = x;
 	}
-	mlx_mouse_hide();
 	return (0);
 }

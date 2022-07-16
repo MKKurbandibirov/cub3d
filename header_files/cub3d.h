@@ -23,7 +23,7 @@
 # include "../libft/libft.h"
 
 # define SCALE 10
-# define PRINT_CRD 35
+# define MOUSE_HIDE 35
 
 # define WIN_HEIGHT 1200
 # define WIN_WIDTH 1800
@@ -162,6 +162,7 @@ typedef struct s_cub
 	int			default_y;
 	int			direction;
 	int			clr_c;
+	int			key_mouse_hide;
 	int			cnt_texture_sp;
 	int			sprite_pos_x;
 	int			sprite_pos_y;
@@ -212,8 +213,6 @@ void		draw_sprite(t_cub *cub, int i);
 int			door_open(t_cub *cub, int keycode);
 int			door_close(t_cub *cub, int keycode);
 
-
-
-void	draw_minimap(t_cub *cub, int i, int j);
+void		draw_minimap(t_cub *cub, int i, int j);
 
 #endif

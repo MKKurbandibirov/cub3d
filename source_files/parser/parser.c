@@ -83,6 +83,7 @@ void	ft_parser(char *path, t_cub *cub)
 	}
 	ft_init_prs(prs, cub);
 	ft_preparser(prs, path);
+	prs->cub->key_mouse_hide = 0;
 	free(prs->strlen);
 	free(prs);
 }
