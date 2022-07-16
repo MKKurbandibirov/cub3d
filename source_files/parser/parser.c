@@ -82,5 +82,5 @@ void	ft_parser(char *path, t_cub *cub)
 	}
 	ft_init_prs(&prs, cub);
 	ft_preparser(&prs, path);
-	ft_prs_exit(&prs, 1);
+	free(prs.strlen);
 }

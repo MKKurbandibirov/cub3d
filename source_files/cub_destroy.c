@@ -42,7 +42,13 @@ void	cub_destroy(t_cub *cub)
 {
 	free(cub->person);
 	free(cub->rays);
+	free_split(cub->sprite_texture);
 	free_split(cub->map);
+	free_split(cub->wall_texture_path);
+	free_split(cub->map);
+	while (cub->cnt_door)
+		free(cub->doors_pos[--cub->cnt_door]);
+	free(cub->doors_pos);
 	free_textures(cub);
 	free_sprites(cub);
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->mlx->img_ptr);

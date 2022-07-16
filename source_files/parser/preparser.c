@@ -143,10 +143,8 @@ int	ft_get_color(char *s, t_prs *prs)
 	return (color);
 }
 
-void	ft_broadcast_settings(t_prs *prs)
+void	ft_broadcast_settings(t_prs *prs, int i)
 {
-	int	i;
-
 	ft_coord(prs, -1, -1);
 	prs->cub->cnt_door = prs->cnt_doors;
 	prs->cub->map = prs->map;
@@ -169,6 +167,7 @@ void	ft_broadcast_settings(t_prs *prs)
 		prs->cub->wall_texture_path[4] = NULL;
 	prs->cub->clr_c = ft_get_color(prs->texture->massiv[4], prs);
 	prs->cub->clr_f = ft_get_color(prs->texture->massiv[5], prs);
+	free_split(prs->texture->massiv);
 }
 
 void	ft_preparser(t_prs *prs, char *path)
@@ -184,7 +183,7 @@ void	ft_preparser(t_prs *prs, char *path)
 		ft_verticatl_checking(prs, 0, 0);
 		ft_horizontal_checking(prs);
 		ft_alloc(prs, 0);
-		ft_broadcast_settings(prs);
+		ft_broadcast_settings(prs, 0);
 	}
 	else
 	{
