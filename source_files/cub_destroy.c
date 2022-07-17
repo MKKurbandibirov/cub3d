@@ -14,17 +14,12 @@
 
 void	free_textures(t_cub *cub)
 {
-	free(cub->no_tex->path);
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->no_tex->img_ptr);
-	free(cub->so_tex->path);
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->so_tex->img_ptr);
-	free(cub->ea_tex->path);
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->ea_tex->img_ptr);
-	free(cub->we_tex->path);
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->we_tex->img_ptr);
 	if (cub->cnt_door > 0)
 	{
-		free(cub->door->path);
 		mlx_destroy_image(cub->mlx->mlx_ptr, cub->door->img_ptr);
 	}
 }
