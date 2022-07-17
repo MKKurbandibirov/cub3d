@@ -72,7 +72,8 @@ void	drawing(t_cub *cub, int i)
 					- (-cub->sprite[i]->sprite_width / 2
 						+ cub->sprite[i]->sprite_screen_x))
 				* cub->sprite[i]->height / cub->sprite[i]->sprite_width) / 256;
-		draw_sprite_stripe(cub, i, stripe);
+		if (cub->sprite != NULL)
+			draw_sprite_stripe(cub, i, stripe);
 		stripe++;
 	}
 }

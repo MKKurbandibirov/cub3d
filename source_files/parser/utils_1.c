@@ -23,6 +23,7 @@ void	ft_get_path(t_prs *prs)
 		ft_delelem(&prs->preprs, prs->preprs, prs);
 		curr = curr->next;
 	}
+	ft_check_all_access(prs);
 }
 
 void	ft_free_serch_helper(t_prs **prs)

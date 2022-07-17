@@ -65,5 +65,6 @@ void	ft_prs_exit(t_prs *prs, int key);
 
 //utils_2.c
 int		ft_check_xpm(char *path);
+t_plist	*ft_firs_lst(t_plist *lst);
 
 #endif

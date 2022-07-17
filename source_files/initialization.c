@@ -17,6 +17,8 @@ t_sprite	**set_sprites(t_cub *cub)
 	int			i;
 	t_sprite	**sprite;
 
+	if (cub->cnt_texture_sp == 0)
+		return (NULL);
 	sprite = (t_sprite **)malloc(sizeof(t_sprite *) * cub->cnt_texture_sp);
 	if (sprite == NULL)
 		return (NULL);
@@ -48,7 +50,7 @@ t_cub	*cub_init(char *argv)
 		return (NULL);
 	cub->sprite = NULL;
 	cub->sprite = set_sprites(cub);
-	if (cub->sprite == NULL)
+	if (cub->cnt_texture_sp > 0 && cub->sprite == NULL)
 		return (NULL);
 	cub->person = person_init(cub->direction, cub->user_pos_x, cub->user_pos_y);
 	if (set_textures(cub) == NULL || cub->person == NULL)

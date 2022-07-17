@@ -91,8 +91,10 @@ void	*set_textures(t_cub *cub)
 	if (cub->we_tex == NULL)
 		return (NULL);
 	if (cub->cnt_door > 0)
-	cub->door = texture_init(cub->wall_texture_path[4], cub->mlx);
-	if (cub->door == NULL)
-		return (NULL);
+	{
+		cub->door = texture_init(cub->wall_texture_path[4], cub->mlx);
+		if (cub->door == NULL)
+			return (NULL);
+	}
 	return (cub);
 }

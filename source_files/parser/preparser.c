@@ -105,7 +105,6 @@ void	ft_preparser(t_prs *prs, char *path)
 {
 	ft_create_lists(&prs, path);
 	ft_get_path(prs);
-	ft_check_all_access(prs);
 	if (prs->preprs != NULL && prs->texture->check_cnt >= 6)
 	{
 		ft_skip_endl(prs);
@@ -117,10 +116,12 @@ void	ft_preparser(t_prs *prs, char *path)
 		ft_alloc(prs, 0);
 		ft_broadcast_settings(prs, 0);
 		prs->cub->str_in_map = prs->cnt_str_in_map;
-		while (prs->texture->lst->prev)
-			prs->texture->lst = prs->texture->lst->prev;
-		while (prs->texture->lst)
-			ft_delelem_sp(&prs->texture->lst, prs->texture->lst);
+		if (prs->texture->cnt_lst)
+		{
+			prs->texture->lst = ft_firs_lst(prs->texture->lst);
+			while (prs->texture->lst)
+				ft_delelem_sp(&prs->texture->lst, prs->texture->lst);
+		}
 	}
 	else
 	{

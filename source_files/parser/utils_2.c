@@ -38,3 +38,15 @@ int	ft_check_xpm(char *path)
 	close(fd);
 	return (0);
 }
+
+t_plist	*ft_firs_lst(t_plist *lst)
+{
+	t_plist	*curr;
+
+	if (lst == NULL)
+		return (NULL);
+	curr = lst;
+	while (curr->prev != NULL)
+		curr = curr->prev;
+	return (curr);
+}

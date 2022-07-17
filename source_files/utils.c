@@ -70,9 +70,12 @@ int	rendering(t_cub *cub)
 		* (cub->mlx->bits_per_pixel / 8));
 	raycasting(cub, cub->curr_spr);
 	cub->end = clock();
-	draw_sprite(cub, cub->curr_spr);
-	if ((cub->start - cub->end) % 4 == 0)
-		cub->curr_spr = (cub->curr_spr + 1) % cub->cnt_texture_sp;
+	if (cub->sprite != NULL)
+	{
+		draw_sprite(cub, cub->curr_spr);
+		if ((cub->start - cub->end) % 4 == 0)
+			cub->curr_spr = (cub->curr_spr + 1) % cub->cnt_texture_sp;
+	}
 	draw_minimap(cub, -10, -10);
 	mlx_put_image_to_window(cub->mlx->mlx_ptr,
 		cub->mlx->win_ptr, cub->mlx->img_ptr, 0, 0);
