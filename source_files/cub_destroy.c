@@ -6,28 +6,55 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:42:36 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/07 16:57:15 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:43:40 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header_files/cub3d.h"
 
-void	map_free(int **map, int length)
+void	free_textures(t_cub *cub)
+{
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->no_tex->img_ptr);
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->so_tex->img_ptr);
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->ea_tex->img_ptr);
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->we_tex->img_ptr);
+	if (cub->cnt_door > 0)
+	{
+		mlx_destroy_image(cub->mlx->mlx_ptr, cub->door->img_ptr);
+	}
+}
+
+void	free_sprites(t_cub *cub)
 {
 	int	i;
 
-	i = 0;
-	while (i < length)
+	if (cub->sprite != NULL)
 	{
-		free(map[i]);
-		i++;
+		i = 0;
+		while (i < cub->cnt_texture_sp)
+		{
+			mlx_destroy_image(cub->mlx->mlx_ptr, cub->sprite[i]->img_ptr);
+			free(cub->sprite[i]);
+			i++;
+		}
+		free(cub->sprite);
 	}
-	free(map);
 }
 
 void	cub_destroy(t_cub *cub)
 {
-	mlx_destroy_window(cub->mlx_ptr, cub->mlx_win);
-	map_free(cub->map, cub->map_length);
+	free(cub->person);
+	free(cub->rays);
+	free_split(cub->map);
+	while (cub->cnt_door)
+		free(cub->doors_pos[--cub->cnt_door]);
+	free(cub->doors_pos);
+	free_split(cub->wall_texture_path);
+	free_textures(cub);
+	free_sprites(cub);
+	free_split(cub->sprite_texture);
+	mlx_destroy_image(cub->mlx->mlx_ptr, cub->mlx->img_ptr);
+	mlx_destroy_window(cub->mlx->mlx_ptr, cub->mlx->win_ptr);
+	free(cub->mlx);
 	free(cub);
 }
