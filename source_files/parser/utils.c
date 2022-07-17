@@ -24,8 +24,9 @@ int	ft_access(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_strerr("failed to read the file ");
+		ft_strerr("[ERROR] Failed to read the file ");
 		ft_strerr(path);
+		ft_strerr("\n");
 		return (1);
 	}
 	close(fd);

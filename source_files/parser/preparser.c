@@ -105,6 +105,7 @@ void	ft_preparser(t_prs *prs, char *path)
 {
 	ft_create_lists(&prs, path);
 	ft_get_path(prs);
+	ft_check_all_access(prs);
 	if (prs->preprs != NULL && prs->texture->check_cnt >= 6)
 	{
 		ft_skip_endl(prs);

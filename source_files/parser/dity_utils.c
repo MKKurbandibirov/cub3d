@@ -12,6 +12,30 @@
 
 #include "../../header_files/parser.h"
 
+void	ft_check_all_access(t_prs *prs)
+{
+	int		i;
+	t_plist	*curr;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (ft_check_xpm(prs->texture->massiv[i++]))
+			ft_prs_exit(prs, 0);
+	}
+	if (prs->texture->check_cnt > 6 && ft_check_xpm(prs->texture->massiv[6]))
+		ft_prs_exit(prs, 0);
+	i = 0;
+	curr = prs->texture->lst;
+	while (i < prs->texture->cnt_lst)
+	{
+		if (ft_check_xpm(curr->data))
+			ft_prs_exit(prs, 0);
+		curr = curr->next;
+		i++;
+	}
+}
+
 char	*ft_strtrim_v1(char *s1, char *set)
 {
 	size_t	size;

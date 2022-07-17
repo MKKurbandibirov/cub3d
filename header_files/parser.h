@@ -53,6 +53,7 @@ char	*ft_strtrim_v1(char *s1, char *set);
 int		ft_dirty_strlen(char *s, int i, t_prs *prs);
 void	ft_alloc_map(t_prs *prs);
 void	ft_skip_endl(t_prs *prs);
+void	ft_check_all_access(t_prs *prs);
 
 //utils_1.c
 void	ft_get_path(t_prs *prs);
@@ -61,5 +62,8 @@ void	ft_free_allocated_err(t_prs *prs, int key);
 void	ft_broadcast_settings(t_prs *prs, int i);
 
 void	ft_prs_exit(t_prs *prs, int key);
+
+//utils_2.c
+int		ft_check_xpm(char *path);
 
 #endif
