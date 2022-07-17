@@ -6,7 +6,7 @@
 /*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:42:36 by nfarfetc          #+#    #+#             */
-/*   Updated: 2022/07/15 14:43:40 by nfarfetc         ###   ########.fr       */
+/*   Updated: 2022/07/17 10:36:12 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 void	free_textures(t_cub *cub)
 {
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->no_tex->img_ptr);
+	free(cub->no_tex);
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->so_tex->img_ptr);
+	free(cub->so_tex);
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->ea_tex->img_ptr);
+	free(cub->ea_tex);
 	mlx_destroy_image(cub->mlx->mlx_ptr, cub->we_tex->img_ptr);
+	free(cub->we_tex);
 	if (cub->cnt_door > 0)
 	{
 		mlx_destroy_image(cub->mlx->mlx_ptr, cub->door->img_ptr);
+		free(cub->door);
 	}
 }
 
@@ -43,12 +48,21 @@ void	free_sprites(t_cub *cub)
 
 void	cub_destroy(t_cub *cub)
 {
+	int	i;
+
 	free(cub->person);
 	free(cub->rays);
 	free_split(cub->map);
-	while (cub->cnt_door)
-		free(cub->doors_pos[--cub->cnt_door]);
-	free(cub->doors_pos);
+	if (cub->cnt_door > 0)
+	{
+		i = 0;
+		while (i < cub->cnt_door)
+		{
+			free(cub->doors_pos[i]);
+			i++;
+		}
+		free(cub->doors_pos);
+	}
 	free_split(cub->wall_texture_path);
 	free_textures(cub);
 	free_sprites(cub);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
+/*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:15:14 by gtaggana          #+#    #+#             */
-/*   Updated: 2022/07/16 20:20:44 by gtaggana         ###   ########.fr       */
+/*   Updated: 2022/07/17 10:08:59 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ void	ft_alloc_sp(t_prs *prs, int i)
 
 void	ft_alloc(t_prs *prs, int i)
 {
-	prs->cub->doors_pos = (int **)malloc(sizeof(int *) * prs->cnt_doors);
-	if (prs->cub->doors_pos == NULL)
-		ft_free_allocated_err(prs, 1);
+	if (prs->cnt_doors > 0)
+	{
+		prs->cub->doors_pos = (int **)malloc(sizeof(int *) * prs->cnt_doors);
+		if (prs->cub->doors_pos == NULL)
+			ft_free_allocated_err(prs, 1);
+	}
 	while (i < prs->cnt_doors)
 	{
 		prs->cub->doors_pos[i] = (int *)malloc(sizeof(int) * 2);

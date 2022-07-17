@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dity_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
+/*   By: nfarfetc <nfarfetc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 18:56:38 by gtaggana          #+#    #+#             */
-/*   Updated: 2022/07/15 18:56:40 by gtaggana         ###   ########.fr       */
+/*   Updated: 2022/07/17 09:46:41 by nfarfetc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int	ft_dirty_strlen(char *s, int i, t_prs *prs)
 			prs->cnt_ewns++;
 			if (prs->cnt_ewns <= 1 && s[i] == 'N')
 				prs->cub->direction = NORTH;
-			else if (prs->cnt_ewns < 1 && s[i] == 'S')
+			else if (prs->cnt_ewns <= 1 && s[i] == 'S')
 				prs->cub->direction = SOUTH;
-			else if (prs->cnt_ewns < 1 && s[i] == 'W')
+			else if (prs->cnt_ewns <= 1 && s[i] == 'W')
 				prs->cub->direction = WEST;
-			else if (prs->cnt_ewns < 1 && s[i] == 'E')
+			else if (prs->cnt_ewns <= 1 && s[i] == 'E')
 				prs->cub->direction = EAST;
 		}
 		else if (s[i] == 'D')
