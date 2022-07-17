@@ -12,6 +12,22 @@
 
 #include "../../header_files/parser.h"
 
+void	ft_alloc_sp(t_prs *prs, int i)
+{
+	prs->cub->sprite_texture = (char **)malloc(sizeof(char *)
+			* prs->texture->cnt_lst + 1);
+	if (prs->cub->sprite_texture == NULL)
+		ft_free_allocated_err(prs, 1);
+	while (i < prs->texture->cnt_lst)
+	{
+		prs->cub->sprite_texture[i++] = ft_strdup(prs->texture->lst->data);
+		if (i == prs->texture->cnt_lst)
+			break ;
+		prs->texture->lst = prs->texture->lst->next;
+	}
+	prs->cub->sprite_texture[i] = NULL;
+}
+
 void	ft_alloc(t_prs *prs, int i)
 {
 	prs->cub->doors_pos = (int **)malloc(sizeof(int *) * prs->cnt_doors);
@@ -25,22 +41,7 @@ void	ft_alloc(t_prs *prs, int i)
 		i++;
 	}
 	if (prs->texture->cnt_lst != 0)
-	{
-		i = 0;
-		prs->cub->sprite_texture = (char **)malloc(sizeof(char *)
-				* prs->texture->cnt_lst + 1);
-		if (prs->cub->sprite_texture == NULL)
-			ft_free_allocated_err(prs, 1);
-		while (i < prs->texture->cnt_lst)
-		{
-			prs->cub->sprite_texture[i++] = ft_strdup(prs->texture->lst->data);
-			if (i == prs->texture->cnt_lst)
-				break ;
-			// ft_delelem_sp(&prs->texture->lst, prs->texture->lst);
-			prs->texture->lst = prs->texture->lst->next;
-		}
-		prs->cub->sprite_texture[i] = NULL;
-	}
+		ft_alloc_sp(prs, 0);
 }
 
 void	ft_coord(t_prs *prs, int i, int j)
@@ -72,15 +73,6 @@ void	ft_coord(t_prs *prs, int i, int j)
 	}
 }
 
-void	ft_valid_cnt(t_prs *prs)
-{
-	if (prs->cnt_ewns != 1 || prs->cnt_yoda > 1)
-	{
-		ft_strerr("[ERROR] Invalid .cub file\n");
-		ft_prs_exit(prs, 1);
-	}
-}
-
 void	ft_get_map(t_prs *prs, int i)
 {
 	t_plist	*curr;
@@ -98,8 +90,9 @@ void	ft_get_map(t_prs *prs, int i)
 		ft_strerr("[ERROR] Invalid .cub file\n");
 		ft_prs_exit(prs, 0);
 	}
-	prs->map[i] = NULL;
-	prs->cnt_str_in_map = i - 1;
+	if (prs->map[i] != NULL)
+		prs->map[i] = NULL;
+	prs->cnt_str_in_map = i;
 	prs->strlen = (int *)malloc(sizeof(int) * prs->cnt_str_in_map);
 	if (prs->strlen == NULL)
 		ft_free_allocated_err(prs, 0);
@@ -118,8 +111,8 @@ void	ft_preparser(t_prs *prs, char *path)
 		ft_alloc_map(prs);
 		ft_get_map(prs, 0);
 		ft_valid_cnt(prs);
-		ft_verticatl_checking(prs, 0, 0);
-		ft_horizontal_checking(prs);
+		ft_horizontal_checking(prs, 0, 0);
+		ft_verticatl_checking(prs, 0, 'H', 0);
 		ft_alloc(prs, 0);
 		ft_broadcast_settings(prs, 0);
 		prs->cub->str_in_map = prs->cnt_str_in_map;

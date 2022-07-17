@@ -12,54 +12,80 @@
 
 #include "../../header_files/parser.h"
 
-void	ft_horizontal_checking(t_prs *prs)
+int	ft_is_analog_zero(char c)
 {
-	int	i;
-	int	start;
-	int	end;
+	if (c == 'Y' || c == '0' || c == 'N' || c == 'S' || c == 'W'
+		|| c == 'E' || c == 'D')
+		return (1);
+	return (0);
+}
 
-	i = 0;
+static void	ft_horiz_err(t_prs *prs)
+{
+	ft_strerr("[ERROR] (HORIZ) Invalid .cub file\n");
+	ft_prs_exit(prs, 0);
+}
+
+static void	ft_vert_err(t_prs *prs)
+{
+	ft_strerr("[ERROR] (VERT) Invalid .cub file\n");
+	ft_prs_exit(prs, 0);
+}
+
+void	ft_horizontal_checking(t_prs *prs, int i, int j)
+{
+	char	prev;
+
 	while (prs->map[i])
 	{
-		start = 0;
-		end = ft_strlen(prs->map[i]) - 1;
-		while (prs->map[i][start] == ' ')
-			start++;
-		while (prs->map[i][end] == ' ')
-			end--;
-		if (end == 0)
-			return ;
-		if (prs->map[i][end] != '1' || prs->map[i][start] != '1')
+		j = 0;
+		while (prs->map[i][j] == ' ')
+			j++;
+		if (prs->map[i][j] && prs->map[i][j] != '1')
+			ft_horiz_err(prs);
+		prev = prs->map[i][j];
+		while (prs->map[i][j])
 		{
-			ft_strerr("[ERROR] Invalid .cub file\n");
+			if ((ft_is_analog_zero(prs->map[i][j]) && prev == ' ')
+				|| (prs->map[i][j] == ' ' && ft_is_analog_zero(prev)))
+				ft_horiz_err(prs);
+			prev = prs->map[i][j];
+			j++;
+		}
+		if (ft_is_analog_zero(prev))
+		{
+			ft_strerr("[ERROR] (HORIZ) Invalid .cub file\n");
 			ft_prs_exit(prs, 0);
 		}
 		i++;
 	}
 }
 
-void	ft_verticatl_checking(t_prs *prs, int start, int end)
+void	ft_verticatl_checking(t_prs *prs, int j, char prev, int i)
 {
-	int	i;
-
-	i = 0;
 	while (i < prs->max_len_str)
 	{
-		start = 0;
-		end = prs->cnt_str_in_map;
-		while (prs->map[start] && (prs->strlen[start] <= i
-				|| (prs->map[start][i] && prs->map[start][i] == ' ')))
-			start++;
-		while (end != 0 && prs->map[end] && (prs->strlen[end] <= i
-				|| (prs->map[end][i] && prs->map[end][i] == ' ')))
-			end--;
-		if (end == 0)
-			return ;
-		else if (prs->map[end][i] != '1' || prs->map[start][i] != '1')
+		j = 0;
+		while (prs->map[j] && (prs->strlen[j] <= i
+				|| (prs->map[j][i] && prs->map[j][i] == ' ')))
+			j++;
+		if (prs->map[j][i] && prs->map[j][i] != '1')
+			ft_vert_err(prs);
+		prev = prs->map[j][i];
+		while (prs->map[j])
 		{
-			ft_strerr("[ERROR] Invalid .cub file\n");
-			ft_prs_exit(prs, 1);
+			while (prs->map[j] && prs->strlen[j] < i)
+				j++;
+			if (prs->map[j] && ((prs->map[j][i] == ' '
+					&& ft_is_analog_zero(prev))
+				|| (ft_is_analog_zero(prs->map[j][i]) && prev == ' ')))
+				ft_vert_err(prs);
+			if (prs->map[j] && prs->strlen[j] >= i)
+				prev = prs->map[j][i];
+			j++;
 		}
+		if (prs->map[j] == NULL && ft_is_analog_zero(prev))
+			ft_vert_err(prs);
 		i++;
 	}
 }

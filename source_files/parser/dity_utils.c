@@ -63,6 +63,7 @@ void	ft_alloc_map(t_prs *prs)
 	prs->map = (char **) malloc(sizeof(char *) * prs->len_lists + 1);
 	if (!prs->map)
 		ft_free_allocated_err(prs, 0);
+	prs->map[prs->len_lists] = NULL;
 }
 
 void	ft_skip_endl(t_prs *prs)

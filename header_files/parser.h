@@ -16,41 +16,6 @@
 # include <fcntl.h>
 # include "cub3d.h"
 
-typedef struct s_plist	t_plist;
-typedef struct s_texture_prs
-{
-	char		*massiv[8];
-	t_plist		*lst;
-	int			cnt_lst;
-	int			check_cnt;
-}	t_texture_prs;
-
-typedef struct s_plist
-{
-	int				id;
-	char			*data;
-	t_plist			*next;
-	t_plist			*prev;
-}	t_plist;
-
-typedef struct s_prs
-{
-	char			**map;
-	int				*strlen;
-	int				max_len_str;
-	t_texture_prs	*texture;
-	t_plist			*preprs;
-	int				len_lists;
-	int				cnt_str_in_map;
-	int				cnt_ewns;
-	int				cnt_doors;
-	int				cnt_yoda;
-	int				sprite_pos_x;
-	int				sprite_pos_y;
-	int				curr_door;
-	t_cub			*cub;
-}	t_prs;
-
 //prepars_list_func.c
 void	ft_pushback_p(t_plist **head, char *line, t_prs *prs);
 void	ft_delelem(t_plist **head, t_plist *delElem, t_prs *prs);
@@ -64,6 +29,7 @@ void	ft_parser(char *path, t_cub *cub);
 //preparser.c
 void	ft_preparser(t_prs *prs, char *path);
 void	ft_coord(t_prs *prs, int i, int j);
+void	ft_valid_cnt(t_prs *prs);
 
 //utils.c
 void	ft_strerr(char *s);
@@ -79,8 +45,8 @@ int		ft_search_settings(char	*s, t_prs **prs, int i, int status);
 void	ft_create_lists(t_prs **prs, char *path);
 
 //map.c
-void	ft_horizontal_checking(t_prs *prs);
-void	ft_verticatl_checking(t_prs *prs, int start, int end);
+void	ft_horizontal_checking(t_prs *prs, int i, int j);
+void	ft_verticatl_checking(t_prs *prs, int j, char prev, int i);
 
 //dirty_utils.c
 char	*ft_strtrim_v1(char *s1, char *set);
@@ -94,9 +60,6 @@ void	ft_free_serch_helper(t_prs **prs);
 void	ft_free_allocated_err(t_prs *prs, int key);
 void	ft_broadcast_settings(t_prs *prs, int i);
 
-
-
-
-void ft_prs_exit(t_prs *prs, int key);
+void	ft_prs_exit(t_prs *prs, int key);
 
 #endif

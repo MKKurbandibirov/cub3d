@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtaggana <gtaggana@student.21-school       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/17 04:12:55 by gtaggana          #+#    #+#             */
+/*   Updated: 2022/07/17 04:12:56 by gtaggana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header_files/cub3d.h"
 
 void	draw_square2(t_cub *cub, int x, int y, int color)
@@ -50,7 +62,7 @@ void	draw_minimap(t_cub *cub, int i, int j)
 		dif_y = abs(y + j);
 		while (dif_y <= (10 + y))
 		{
-			if (dif_x <= cub->str_in_map
+			if (cub->map[dif_x] && dif_x <= cub->str_in_map
 				&& (int)(ft_strlen(cub->map[dif_x])) >= dif_y)
 				draw_square(cub, dif_x, dif_y, cub->map[dif_x][dif_y]);
 			dif_y = abs(y + (++j));

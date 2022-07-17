@@ -28,7 +28,7 @@ void	free_sprites(t_cub *cub)
 	if (cub->sprite != NULL)
 	{
 		i = 0;
-		while (cub->sprite[i] != NULL)
+		while (i < cub->cnt_texture_sp)
 		{
 			mlx_destroy_image(cub->mlx->mlx_ptr, cub->sprite[i]->img_ptr);
 			free(cub->sprite[i]);

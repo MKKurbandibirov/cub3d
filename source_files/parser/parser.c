@@ -12,6 +12,15 @@
 
 #include "../../header_files/parser.h"
 
+void	ft_valid_cnt(t_prs *prs)
+{
+	if (prs->cnt_ewns != 1 || prs->cnt_yoda > 1)
+	{
+		ft_strerr("[ERROR] Invalid .cub file\n");
+		ft_prs_exit(prs, 1);
+	}
+}
+
 static void	ft_init_prs(t_prs *prs, t_cub *cub)
 {
 	int	i;
@@ -62,11 +71,13 @@ void	ft_prs_exit(t_prs *prs, int key)
 		ft_delelem(&prs->preprs, prs->preprs, prs);
 	free_split(prs->cub->sprite_texture);
 	free_split(prs->cub->wall_texture_path);
-	while (prs->cnt_doors)
-		free(prs->cub->doors_pos[--prs->cnt_doors]);
-	free(prs->cub->doors_pos);
 	if (key > 0)
+	{
+		while (prs->cnt_doors)
+			free(prs->cub->doors_pos[--prs->cnt_doors]);
+		free(prs->cub->doors_pos);
 		free(prs->strlen);
+	}
 	free(prs->cub);
 	exit(EXIT_FAILURE);
 }
@@ -83,7 +94,6 @@ void	ft_parser(char *path, t_cub *cub)
 	}
 	ft_init_prs(prs, cub);
 	ft_preparser(prs, path);
-	prs->cub->key_mouse_hide = 0;
 	free(prs->strlen);
 	free(prs);
 }

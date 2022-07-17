@@ -31,6 +31,8 @@ LIBFT_SRC	=	ft_atoi.c		ft_bzero.c		ft_calloc.c	ft_isalnum.c	ft_isalpha.c	ft_isas
 				ft_lstlast_bonus.c				ft_lstnew_bonus.c				ft_lstsize_bonus.c				ft_lstmap_bonus.c
 
 HEAD_FILE	=	./header_files/cub3d.h\
+				./header_files/parser.h\
+				./header_files/struct.h\
 				./libft/libft.h
 
 

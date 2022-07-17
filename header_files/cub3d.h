@@ -13,15 +13,6 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <time.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <math.h>
-
-# include "../mlx/mlx.h"
-# include "../libft/libft.h"
-
 # define SCALE 10
 # define MOUSE_HIDE 35
 
@@ -50,128 +41,15 @@
 
 # define EXIT_KEY 53
 
-typedef struct s_person
-{
-	double	pos_x;
-	double	pos_y;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
-	double	camera_x;
-	int		mouse_x;
-}	t_person;
+# include <time.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <math.h>
 
-typedef struct s_rays
-{
-	double	ray_dir_x;
-	double	ray_dir_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-	double	wall_x;
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
-	int		hit;
-	int		side;
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
-	int		tex_x;
-	int		tex_y;
-}	t_rays;
-
-typedef struct s_texture
-{
-	void	*img_ptr;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		type;
-	char	*path;
-	int		tex_height;
-	int		tex_width;
-}	t_texture;
-
-typedef struct s_sprite
-{
-	void	*img_ptr;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	char	*path;
-	int		height;
-	int		width;
-	int		pos_x;
-	int		pos_y;
-	double	sprite_x;
-	double	sprite_y;
-	double	transform_x;
-	double	transform_y;
-	int		draw_start_x;
-	int		draw_end_x;
-	int		draw_start_y;
-	int		draw_end_y;
-	int		sprite_height;
-	int		sprite_width;
-	int		sprite_screen_x;
-	int		tex_x;
-	int		tex_y;
-	double	z_buff[WIN_WIDTH];
-}	t_sprite;
-
-typedef struct s_mlx
-{
-	void		*mlx_ptr;
-	void		*win_ptr;
-	void		*img_ptr;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}	t_mlx;
-
-typedef struct s_cub
-{
-	time_t		start;
-	time_t		end;
-	int			map_height;
-	int			map_width;
-	char		**map;
-	t_mlx		*mlx;
-	t_rays		*rays;
-	t_person	*person;
-	t_texture	*no_tex;
-	t_texture	*so_tex;
-	t_texture	*we_tex;
-	t_texture	*ea_tex;
-	t_texture	*door;
-	t_sprite	**sprite;
-	char		**sprite_texture;
-	char		**wall_texture_path;
-	int			clr_f;
-	int			user_pos_x;
-	int			user_pos_y;
-	int			default_x;
-	int			default_y;
-	int			direction;
-	int			clr_c;
-	int			key_mouse_hide;
-	int			cnt_texture_sp;
-	int			sprite_pos_x;
-	int			sprite_pos_y;
-	int			curr_spr;
-	int			cnt_door;
-	int			str_in_map;
-	int			**doors_pos;
-}	t_cub;
-
+# include "../mlx/mlx.h"
+# include "../libft/libft.h"
+# include "struct.h"
 # include "parser.h"
 
 /*---------------- Initialization ----------------*/
